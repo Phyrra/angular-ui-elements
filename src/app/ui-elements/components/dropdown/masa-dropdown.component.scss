@@ -80,7 +80,7 @@
 				padding: $default-padding;
 				cursor: pointer;
 
-				&:hover {
+				&.selected {
 					background-color: $hover-color;
 				}
 			}

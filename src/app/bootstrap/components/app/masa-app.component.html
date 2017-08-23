@@ -1,6 +1,6 @@
 <masa-dropdown [data]="someData" (onChange)="onValueSelected($event)" [search]="['name']" [noSearch]="0" placeholder="-- choose --">
 	<ng-template let-item="item">
-		{{ item.name }} ({{ item.id }})
+		{{ item.name }} ({{ item.id }}) - {{ item.idx }}
 	</ng-template>
 </masa-dropdown>
 

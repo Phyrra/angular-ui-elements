@@ -31,6 +31,8 @@ export class MasaDropdownComponent implements OnInit {
 	isGrouped: boolean;
 	showSearch: boolean;
 
+	currentIdx: number = -1;
+
 	constructor(private elementRef: ElementRef) { }
 
 	@HostListener('document:click', ['$event.target']) onOutsideClick(targetElement: any): void {
@@ -41,10 +43,34 @@ export class MasaDropdownComponent implements OnInit {
 		}
 	}
 
-	ngOnInit(): void {
-		this.filteredData = this.data;
+	@HostListener('document:keydown', ['$event']) onKeyClick($event: KeyboardEvent): void {
+		if (this.isOpen) {
+			switch ($event.which) {
+				case 27: // ESC
+					this.onClose();
 
+					break;
+				case 13: // ENTER
+					this.onSelectCurrent();
+
+					break;
+				case 38: // UP
+					this.onNavigateSelection(-1);
+
+					break;
+				case 40: // DOWN
+					this.onNavigateSelection(1);
+
+					break;
+				default:
+					console.log($event.which);
+			}
+		}
+	}
+
+	ngOnInit(): void {
 		this.isGrouped = this.isGroup();
+		this.onChangeSearch();
 		this.showSearch = this.shouldShowSearch();
 	}
 
@@ -54,22 +80,69 @@ export class MasaDropdownComponent implements OnInit {
 		}
 
 		this.isOpen = !this.isOpen;
+
+		if (this.isOpen) {
+			if (this.selectedItem) {
+				this.currentIdx = this.selectedItem.idx;
+			} else {
+				this.currentIdx = -1;
+			}
+		}
 	}
 
 	onClose(): void {
 		this.isOpen = false;
 	}
 
-	onSelect(item): void {
+	onSelect(item: any): void {
 		this.onClose();
 		this.selectedItem = item;
 
 		this.onChange.emit(item);
 	}
 
+	onMouseEnter(item: any): void {
+		this.currentIdx = item.idx;
+	}
+
+	onSelectCurrent(): void {
+		if (this.currentIdx === -1) {
+			return;
+		}
+
+		var allItems: any[];
+
+		if (this.isGrouped) {
+			allItems = this.filteredData.reduce((accumulator, group) => {
+				return accumulator.concat(group.items);
+			}, []);
+		} else {
+			allItems = this.filteredData;
+		}
+
+		this.onSelect(
+			allItems.find(elem => elem.idx === this.currentIdx)
+		);
+	}
+
+	onNavigateSelection(direction: number) {
+		setTimeout(() => {
+			this.currentIdx = Math.max(
+				0,
+				Math.min(
+					this.currentIdx + direction,
+					this.getMaxItems(this.filteredData) - 1
+				)
+			);
+		});
+	}
+
 	onChangeSearch(): void {
+		this.currentIdx = -1;
+
 		if (!this.searchTerm) {
 			this.filteredData = this.data;
+			this.numberFilteredItems();
 
 			return;
 		}
@@ -90,6 +163,8 @@ export class MasaDropdownComponent implements OnInit {
 		} else {
 			this.filteredData = this.filterItems(this.data);
 		}
+
+		this.numberFilteredItems();
 	}
 
 	private filterItems(items: any[]): any[] {
@@ -100,6 +175,20 @@ export class MasaDropdownComponent implements OnInit {
 				return (_.get(item, key) || '').toString().toLocaleLowerCase().indexOf(lowerSearch) > -1;
 			});
 		});
+	}
+
+	private numberFilteredItems(): void {
+		var allItems: any[];
+
+		if (this.isGrouped) {
+			allItems = this.filteredData.reduce((accumulator, group) => {
+				return accumulator.concat(group.items);
+			}, []);
+		} else {
+			allItems = this.filteredData;
+		}
+
+		allItems.forEach((item, idx) => item.idx = idx);
 	}
 
 	private isGroup(): boolean {
@@ -121,12 +210,16 @@ export class MasaDropdownComponent implements OnInit {
 			return true;
 		}
 
+		return this.noSearch < this.getMaxItems(this.data);
+	}
+
+	private getMaxItems(data: any): number {
 		if (this.isGrouped) {
-			return this.noSearch < this.data.reduce((accumulator, group) => {
+			return data.reduce((accumulator, group) => {
 				return accumulator.concat(group.items);
 			}, []).length;
 		} else {
-			return this.noSearch < this.data.length;
+			return data.length;
 		}
 	}
 }

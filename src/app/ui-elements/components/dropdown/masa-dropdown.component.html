@@ -26,14 +26,24 @@
 					{{ group.title }}
 				</div>
 
-				<div *ngFor="let item of group.items" class="dropdown-option" (click)="onSelect(item)">
-					<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
+				<div
+					*ngFor="let item of group.items"
+					[ngClass]="{ 'dropdown-option': true, 'selected': item.idx === currentIdx || (currentIdx === -1 && selectedItem?.id === item.id) }"
+					(click)="onSelect(item)"
+					(mouseenter)="onMouseEnter(item)"
+				>
+					<ng-template [ngOutletContext]="{ item: item, $index: item.idx }" [ngTemplateOutlet]="option"></ng-template>
 				</div>
 			</div>
 		</ng-container>
 
 		<ng-container *ngIf="!isGrouped">
-			<div *ngFor="let item of filteredData" class="dropdown-option" (click)="onSelect(item)">
+			<div
+				*ngFor="let item of filteredData"
+				[ngClass]="{ 'dropdown-option': true, 'selected': item.idx === currentIdx || (currentIdx === -1 && selectedItem?.id === item.id) }"
+				(click)="onSelect(item)"
+				(mouseenter)="onMouseEnter(item)"
+			>
 				<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
 			</div>
 		</ng-container>
