@@ -6,17 +6,17 @@ import { FormsModule } from '@angular/forms';
 import { MasaDropdownComponent } from './components/dropdown/masa-dropdown.component';
 
 @NgModule({
-  declarations: [
-    MasaDropdownComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  providers: [
-  ],
-  exports: [
-    MasaDropdownComponent
-  ]
+	declarations: [
+		MasaDropdownComponent
+	],
+	imports: [
+		CommonModule,
+		FormsModule
+	],
+	providers: [
+	],
+	exports: [
+		MasaDropdownComponent
+	]
 })
 export class MasaUiElementsModule { }
