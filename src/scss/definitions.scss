@@ -1,0 +1,49 @@
+// Define colors and sizes here
+
+/*
+ * COLORS
+ */
+
+$content-background: white;
+$content-text-color: black;
+
+$border-color: #ccc;
+$border-color-dark: #999;
+
+$hover-color: #dde7f1;
+
+$input-background: #fafafa;
+$input-disabled: #ccc;
+
+$label-color: #999;
+
+/*
+ * FONTS
+ */
+
+$font: "Roboto Condensed", Arial, sans-serif;
+$font-size: 14px;
+
+$table-header-font-size: 11px;
+
+$label-font-size: 11px;
+
+/*
+ * MARGINS, PADDINGS, ect.
+ */
+
+$default-padding: 12px;
+$default-margin: 12px;
+
+/*
+ * BORDERS
+ */
+
+$element-border-radius: 2px;
+$element-border: 1px solid #ccc;
+
+/*
+ * Z-INDEXES
+ */
+
+$dropdown-z-index: 10;

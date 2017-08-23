@@ -1,0 +1,50 @@
+<div [ngClass]="{ 'dropdown-wrapper': true, 'disabled': disabled, 'open': isOpen }">
+  <div class="dropdown-toggle" (click)="onToggle($event)">
+    <div class="dropdown-display">
+      <ng-container *ngIf="selectedItem">
+        <ng-template
+          [ngOutletContext]="{ item: selectedItem }"
+          [ngTemplateOutlet]="option"
+        ></ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="!selectedItem">
+        {{ placeholder }}
+      </ng-container>
+    </div>
+
+    <div class="dropdown-arrow">
+      <i class="fa fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <div class="dropdown-foldout" *ngIf="isOpen">
+    <div *ngIf="showSearch" class="dropdown-search">
+      <input [(ngModel)]="searchTerm" (ngModelChange)="onChangeSearch()" />
+    </div>
+
+    <ng-container *ngIf="isGrouped">
+      <div *ngFor="let group of filteredItems" class="dropdown-group">
+        <div class="dropdown-group-title">
+          {{ group.title }}
+        </div>
+
+        <div *ngFor="let item of group.items" class="dropdown-option" (click)="onSelect(item)">
+          <ng-template
+            [ngOutletContext]="{ item: item }"
+            [ngTemplateOutlet]="option"
+          ></ng-template>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isGrouped">
+      <div *ngFor="let item of filteredItems" class="dropdown-option" (click)="onSelect(item)">
+        <ng-template
+          [ngOutletContext]="{ item: item }"
+          [ngTemplateOutlet]="option"
+        ></ng-template>
+      </div>
+    </ng-container>
+  </div>
+</div>

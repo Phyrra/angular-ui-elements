@@ -1,0 +1,18 @@
+@import "~scss/definitions";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  font-size: $font-size;
+  font-family: $font;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// import related stylesheets
+
+@import "~font-awesome/css/font-awesome.min.css";

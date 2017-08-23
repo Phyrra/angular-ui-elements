@@ -1,0 +1,17 @@
+<masa-dropdown [data]="someData" (onChange)="onValueSelected($event)" [search]="['name']" [noSearch]="0" placeholder="-- choose --">
+  <ng-template let-item="item">
+    {{ item.name }} ({{ item.id }})
+  </ng-template>
+</masa-dropdown>
+
+<masa-dropdown [data]="someGroupedData" (onChange)="onValueSelected($event)" [search]="['name']" [noSearch]="0" placeholder="-- choose --">
+  <ng-template let-item="item">
+    {{ item.name }} ({{ item.id }})
+  </ng-template>
+</masa-dropdown>
+
+<masa-dropdown [data]="someAsyncDataSource" (onChange)="onValueSelected($event)" [search]="['name']" [noSearch]="0" placeholder="-- choose --">
+  <ng-template let-item="item">
+    {{ item.name }} ({{ item.id }})
+  </ng-template>
+</masa-dropdown>

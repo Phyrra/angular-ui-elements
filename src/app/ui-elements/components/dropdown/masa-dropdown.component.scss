@@ -1,0 +1,102 @@
+@import "~scss/definitions";
+
+:host {
+  .dropdown-wrapper {
+    position: relative;
+
+    background-color: $input-background;
+    color: inherit;
+
+    border: $element-border;
+    border-radius: $element-border-radius;
+
+    &.disabled {
+      .dropdown-toggle {
+        color: $input-disabled;
+
+        .dropdown-arrow {
+          display: none;
+        }
+      }
+    }
+
+    &.open {
+      .dropdown-arrow {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+        background-color: darken($input-background, 5%);
+      }
+    }
+
+    .dropdown-toggle {
+      cursor: pointer;
+
+      display: flex;
+      flex-wrap: nowrap;
+
+      .dropdown-display {
+        flex-grow: 1;
+        padding: $default-padding;
+      }
+
+      .dropdown-arrow {
+        border-left: $element-border;
+
+        padding: $default-padding;
+      }
+    }
+
+    .dropdown-foldout {
+      position: absolute;
+      z-index: $dropdown-z-index;
+
+      left: -1px;
+      right: -1px;
+
+      background-color: $content-background;
+      color: $content-text-color;
+
+      border: $element-border;
+      border-radius: 0 0 $element-border-radius $element-border-radius;
+
+      .dropdown-search {
+        padding: $default-padding;
+
+        input {
+          width: 100%;
+
+          border: $element-border;
+          border-radius: $element-border-radius;
+
+          background-color: $input-background;
+          color: $content-text-color;
+
+          padding: #{$default-padding * 0.75} $default-padding;
+
+          font-size: inherit;
+        }
+      }
+
+      .dropdown-option {
+        padding: $default-padding;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $hover-color;
+        }
+      }
+
+      .dropdown-group {
+        .dropdown-group-title {
+          padding: $default-padding;
+          padding-bottom: $default-padding / 2;
+
+          color: $label-color;
+          font-size: $label-font-size;
+          font-weight: bold;
+
+          border-bottom: $element-border;
+        }
+      }
+    }
+  }
+}
