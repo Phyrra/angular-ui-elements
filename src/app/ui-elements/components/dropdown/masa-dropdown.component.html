@@ -21,7 +21,7 @@
 		</div>
 
 		<ng-container *ngIf="isGrouped">
-			<div *ngFor="let group of filteredItems" class="dropdown-group">
+			<div *ngFor="let group of filteredData" class="dropdown-group">
 				<div class="dropdown-group-title">
 					{{ group.title }}
 				</div>
@@ -33,7 +33,7 @@
 		</ng-container>
 
 		<ng-container *ngIf="!isGrouped">
-			<div *ngFor="let item of filteredItems" class="dropdown-option" (click)="onSelect(item)">
+			<div *ngFor="let item of filteredData" class="dropdown-option" (click)="onSelect(item)">
 				<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
 			</div>
 		</ng-container>

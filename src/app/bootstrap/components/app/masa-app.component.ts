@@ -1,56 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 @Component({
-  selector: 'masa-app',
-  templateUrl: './masa-app.component.html',
-  styleUrls: ['./masa-app.component.scss']
+	selector: 'masa-app',
+	templateUrl: './masa-app.component.html',
+	styleUrls: ['./masa-app.component.scss']
 })
-export class MasaAppComponent {
-  someData: any[] = [{
-    id: 1,
-    name: 'A'
-  }, {
-    id: 2,
-    name: 'B'
-  }, {
-    id: 3,
-    name: 'C'
-  }];
+export class MasaAppComponent implements OnInit {
+	someData: any[] = [{
+		id: 1,
+		name: 'A'
+	}, {
+		id: 2,
+		name: 'B'
+	}, {
+		id: 3,
+		name: 'C'
+	}];
 
-  someGroupedData: any[] = [{
-    title: 'Group 1',
-    items: [{
-      id: 1,
-      name: 'A'
-    }, {
-      id: 2,
-      name: 'B'
-    }]
-  }, {
-    title: 'Group 2',
-    items: [{
-      id: 3,
-      name: 'C'
-    }]
-  }];
+	someGroupedData: any[] = [{
+		title: 'Group 1',
+		items: [{
+			id: 1,
+			name: 'A'
+		}, {
+			id: 2,
+			name: 'B'
+		}]
+	}, {
+		title: 'Group 2',
+		items: [{
+			id: 3,
+			name: 'C'
+		}]
+	}];
 
-  someAsyncDataSource: Observable<any[]> = Observable.of(
-    [{
-      id: 1,
-      name: 'A'
-    }, {
-      id: 2,
-      name: 'B'
-    }, {
-      id: 3,
-      name: 'C'
-    }]
-  );
+	someAsyncData: any[];
 
-  onValueSelected(item): void {
-    console.log(item);
-  }
+	ngOnInit(): void {
+		Observable.of(
+			[{
+				id: 1,
+				name: 'A'
+			}, {
+				id: 2,
+				name: 'B'
+			}, {
+				id: 3,
+				name: 'C'
+			}]
+		)
+		.subscribe(data => this.someAsyncData = data);
+	}
+
+	onValueSelected(item): void {
+		console.log(item);
+	}
 }

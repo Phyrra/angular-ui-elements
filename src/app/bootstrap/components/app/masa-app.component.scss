@@ -1,14 +1,14 @@
 @import "~scss/definitions";
 
 :host {
-  display: block;
-  padding: $default-padding;
+	display: block;
+	padding: $default-padding;
 
-  masa-dropdown {
-    display: block;
+	masa-dropdown {
+		display: block;
 
-    &:not(:first-child) {
-      margin-top: $default-margin;
-    }
-  }
+		&:not(:first-child) {
+			margin-top: $default-margin;
+		}
+	}
 }

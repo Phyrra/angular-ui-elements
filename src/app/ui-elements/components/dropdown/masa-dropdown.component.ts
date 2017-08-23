@@ -26,8 +26,7 @@ export class MasaDropdownComponent implements OnInit {
 	selectedItem: any;
 	searchTerm: string;
 
-	resolvedData: any;
-	filteredItems: any;
+	filteredData: any;
 
 	isGrouped: boolean;
 	showSearch: boolean;
@@ -43,16 +42,7 @@ export class MasaDropdownComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.data instanceof Observable) {
-			this.data.subscribe(data => this.init(data));
-		} else {
-			this.init(this.data);
-		}
-	}
-
-	private init(data: any): void {
-		this.resolvedData = data;
-		this.filteredItems = data;
+		this.filteredData = this.data;
 
 		this.isGrouped = this.isGroup();
 		this.showSearch = this.shouldShowSearch();
@@ -79,13 +69,13 @@ export class MasaDropdownComponent implements OnInit {
 
 	onChangeSearch(): void {
 		if (!this.searchTerm) {
-			this.filteredItems = this.resolvedData;
+			this.filteredData = this.data;
 
 			return;
 		}
 
 		if (this.isGrouped) {
-			this.filteredItems = this.resolvedData
+			this.filteredData = this.data
 				.map(group => {
 					return {
 						title: group.title,
@@ -98,7 +88,7 @@ export class MasaDropdownComponent implements OnInit {
 					return group.items.length > 0;
 				});
 		} else {
-			this.filteredItems = this.filterItems(this.resolvedData);
+			this.filteredData = this.filterItems(this.data);
 		}
 	}
 
@@ -113,11 +103,11 @@ export class MasaDropdownComponent implements OnInit {
 	}
 
 	private isGroup(): boolean {
-		if (!this.resolvedData || this.resolvedData.length === 0) {
+		if (!this.data || this.data.length === 0) {
 			return false;
 		}
 
-		const probe = this.resolvedData[0];
+		const probe = this.data[0];
 
 		return _.has(probe, 'title') && _.has(probe, 'items');
 	}
@@ -132,11 +122,11 @@ export class MasaDropdownComponent implements OnInit {
 		}
 
 		if (this.isGrouped) {
-			return this.noSearch < this.resolvedData.reduce((accumulator, group) => {
+			return this.noSearch < this.data.reduce((accumulator, group) => {
 				return accumulator.concat(group.items);
 			}, []).length;
 		} else {
-			return this.noSearch < this.resolvedData.length;
+			return this.noSearch < this.data.length;
 		}
 	}
 }
