@@ -37,6 +37,34 @@ export class MasaAppComponent implements OnInit {
 		}]
 	}];
 
+	someComplexData: any[] = [{
+		title: 'Hans Muster',
+		items: [{
+			accountOwner: 'Hans Muster',
+			accountNumber: '520.184.004',
+			accountName: 'Erbschaft',
+			saldo: -215.66
+		}, {
+			accountOwner: 'Hans Muster',
+			accountNumber: '520.184.300',
+			accountName: 'Familie',
+			saldo: 13023
+		}]
+	}, {
+		title: 'Eva Loveless',
+		items: [{
+			accountOwner: 'Eva Loveless',
+			accountNumber: '123.456.001',
+			accountName: 'Hauptkonto',
+			saldo: 123235
+		}, {
+			accountOwner: 'Eva Loveless',
+			accountNumber: '123.456.002',
+			accountName: 'Zweitkonto',
+			saldo: 0
+		}]
+	}];
+
 	someAsyncData: any[];
 
 	ngOnInit(): void {
@@ -55,7 +83,7 @@ export class MasaAppComponent implements OnInit {
 		.subscribe(data => this.someAsyncData = data);
 	}
 
-	onValueSelected(item): void {
+	onValueSelected(item: any): void {
 		console.log(item);
 	}
 }

@@ -20,7 +20,9 @@ export class MasaDropdownComponent implements OnInit {
 	@Input() disabled: boolean;
 	@Output() onChange = new EventEmitter<any>();
 
-	@ContentChild(TemplateRef) option;
+	@ContentChild(TemplateRef) template;
+	@ContentChild('option', { read: TemplateRef }) option;
+	@ContentChild('display', { read: TemplateRef }) display;
 
 	isOpen: boolean = false;
 	selectedItem: any;

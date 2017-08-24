@@ -11,4 +11,40 @@
 			margin-top: $default-margin;
 		}
 	}
+
+	masa-dropdown /deep/ {
+		.dropdown-display {
+			.account-description {
+				font-weight: bold;
+				font-size: 1.125rem;
+			}
+
+			.account-info {
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+
+		.dropdown-option {
+			display: flex;
+
+			.number {
+				flex-basis: 0;
+				flex-grow: 1;
+			}
+
+			.name {
+				flex-basis: 0;
+				flex-grow: 2;
+				font-weight: bold;
+			}
+
+			.saldo {
+				flex-basis: 0;
+				flex-grow: 1;
+
+				text-align: right;
+			}
+		}
+	}
 }

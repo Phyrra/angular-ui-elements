@@ -2,7 +2,7 @@
 	<div class="dropdown-toggle" (click)="onToggle($event)">
 		<div class="dropdown-display">
 			<ng-container *ngIf="selectedItem">
-				<ng-template [ngOutletContext]="{ item: selectedItem }" [ngTemplateOutlet]="option"></ng-template>
+				<ng-template [ngOutletContext]="{ item: selectedItem }" [ngTemplateOutlet]="display || option"></ng-template>
 			</ng-container>
 
 			<ng-container *ngIf="!selectedItem">
@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="dropdown-arrow">
-			<i class="fa fa-chevron-down"></i>
+			<div class="arrow-down"></div>
 		</div>
 	</div>
 

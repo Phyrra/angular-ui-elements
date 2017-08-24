@@ -16,8 +16,7 @@
 			"polyfills": "polyfills.ts",
 			"test": "test.ts",
 			"tsconfig": "tsconfig.app.json",
-			"testTsconfig": "tsconfig.spec.json",
-			"prefix": "app",
+			"prefix": "masa",
 			"styles": [
 				"scss/styles.scss"
 			],
