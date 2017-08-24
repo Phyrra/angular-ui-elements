@@ -105,23 +105,18 @@ export class MasaDropdownComponent implements OnInit {
 		this.currentIdx = item.idx;
 	}
 
+	onMouseLeave(): void {
+		this.currentIdx = -1;
+	}
+
 	onSelectCurrent(): void {
 		if (this.currentIdx === -1) {
 			return;
 		}
 
-		var allItems: any[];
-
-		if (this.isGrouped) {
-			allItems = this.filteredData.reduce((accumulator, group) => {
-				return accumulator.concat(group.items);
-			}, []);
-		} else {
-			allItems = this.filteredData;
-		}
-
 		this.onSelect(
-			allItems.find(elem => elem.idx === this.currentIdx)
+			this.getAllItems(this.filteredData)
+				.find(elem => elem.idx === this.currentIdx)
 		);
 	}
 
@@ -178,17 +173,8 @@ export class MasaDropdownComponent implements OnInit {
 	}
 
 	private numberFilteredItems(): void {
-		var allItems: any[];
-
-		if (this.isGrouped) {
-			allItems = this.filteredData.reduce((accumulator, group) => {
-				return accumulator.concat(group.items);
-			}, []);
-		} else {
-			allItems = this.filteredData;
-		}
-
-		allItems.forEach((item, idx) => item.idx = idx);
+		this.getAllItems(this.filteredData)
+			.forEach((item, idx) => item.idx = idx);
 	}
 
 	private isGroup(): boolean {
@@ -214,12 +200,16 @@ export class MasaDropdownComponent implements OnInit {
 	}
 
 	private getMaxItems(data: any): number {
+		return this.getAllItems(data).length;
+	}
+
+	private getAllItems(data: any): any[] {
 		if (this.isGrouped) {
 			return data.reduce((accumulator, group) => {
 				return accumulator.concat(group.items);
-			}, []).length;
+			}, []);
 		} else {
-			return data.length;
+			return data;
 		}
 	}
 }
