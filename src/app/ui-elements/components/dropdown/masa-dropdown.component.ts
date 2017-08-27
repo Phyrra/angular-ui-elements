@@ -2,27 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { HostListener, ElementRef } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { ContentChild, TemplateRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { forwardRef } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
 import * as _ from 'lodash';
 
+const DROPDOWN_VALUE_ACCESSOR = {
+	name: 'masaDropdownValueAccessor',
+	provide: NG_VALUE_ACCESSOR,
+	useExisting: forwardRef(() => MasaDropdownComponent),
+	multi: true
+};
+
 @Component({
 	selector: 'masa-dropdown',
 	templateUrl: './masa-dropdown.component.html',
 	styleUrls: ['./masa-dropdown.component.scss'],
+	providers: [
+		DROPDOWN_VALUE_ACCESSOR
+	]
 })
-export class MasaDropdownComponent implements OnInit {
+export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@Input() placeholder: string;
 	@Input() data: any;
 	@Input() search: string[];
 	@Input() noSearch: number = 0;
 	@Input() disabled: boolean;
-	@Output() onChange = new EventEmitter<any>();
 
 	@ContentChild(TemplateRef) template;
 	@ContentChild('option', { read: TemplateRef }) option;
 	@ContentChild('display', { read: TemplateRef }) display;
+
+	private onModelChange: Function;
 
 	isOpen: boolean = false;
 	selectedItem: any;
@@ -37,11 +50,29 @@ export class MasaDropdownComponent implements OnInit {
 
 	constructor(private elementRef: ElementRef) { }
 
+	registerOnTouched(fn: Function): void {
+		// ignore
+	}
+
+	registerOnChange(fn: Function): void {
+		this.onModelChange = fn;
+	}
+
+	writeValue(item: any): void {
+		if (!this.selectedItem || (item || {}).id !== this.selectedItem.id) {
+			this.onSelect(item);
+		}
+	}
+
+	@HostListener('focus') onFocus(): void {
+		this.onOpen();
+	}
+
 	@HostListener('document:click', ['$event.target']) onOutsideClick(targetElement: any): void {
 		const clickInside = this.elementRef.nativeElement.contains(targetElement);
 
 		if (!clickInside) {
-			this.isOpen = false;
+			this.onClose();
 		}
 	}
 
@@ -84,11 +115,24 @@ export class MasaDropdownComponent implements OnInit {
 		this.isOpen = !this.isOpen;
 
 		if (this.isOpen) {
-			if (this.selectedItem) {
-				this.currentIdx = this.selectedItem.idx;
-			} else {
-				this.currentIdx = -1;
-			}
+			this.evaluateCurrentIndex();
+		}
+	}
+
+	onOpen(): void {
+		if (this.disabled) {
+			return;
+		}
+
+		this.isOpen = true;
+		this.evaluateCurrentIndex();
+	}
+
+	private evaluateCurrentIndex(): void {
+		if (this.selectedItem) {
+			this.currentIdx = this.selectedItem.idx;
+		} else {
+			this.currentIdx = -1;
 		}
 	}
 
@@ -97,10 +141,13 @@ export class MasaDropdownComponent implements OnInit {
 	}
 
 	onSelect(item: any): void {
-		this.onClose();
 		this.selectedItem = item;
 
-		this.onChange.emit(item);
+		if (this.onModelChange) {
+			this.onModelChange(item);
+		}
+
+		this.onClose();
 	}
 
 	onMouseEnter(item: any): void {

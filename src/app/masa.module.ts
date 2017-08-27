@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MasaAppComponent } from './bootstrap/components/app/masa-app.component';
 import { MasaUiElementsModule } from './ui-elements/ui-elements.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -9,7 +10,8 @@ import { MasaUiElementsModule } from './ui-elements/ui-elements.module';
 	],
 	imports: [
 		BrowserModule,
-		MasaUiElementsModule
+		MasaUiElementsModule,
+		FormsModule
 	],
 	providers: [],
 	bootstrap: [
