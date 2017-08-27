@@ -10,6 +10,14 @@
 		border: $element-border;
 		border-radius: $element-border-radius;
 
+		&:focus {
+			outline: none;
+
+			&:not(.open) .dropdown-toggle {
+				outline: -webkit-focus-ring-color auto 5px;
+			}
+		}
+
 		&.disabled {
 			.dropdown-toggle {
 				color: $input-disabled;

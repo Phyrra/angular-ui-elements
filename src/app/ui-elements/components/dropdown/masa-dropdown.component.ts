@@ -64,8 +64,32 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	@HostListener('focus') onFocus(): void {
-		this.onOpen();
+	onWrapperKeydown($event: KeyboardEvent): void {
+		if (this.disabled) {
+			return;
+		}
+
+		if (this.isOpen) {
+			return;
+		}
+
+		switch ($event.which) {
+			case 32: // SPACE
+				this.onOpen();
+
+				break;
+			case 38: // UP
+				this.onNavigateSelection(-1);
+				this.onSelectCurrent();
+
+				break;
+
+			case 40: // DOWN
+				this.onNavigateSelection(1);
+				this.onSelectCurrent();
+
+				break;
+		}
 	}
 
 	@HostListener('document:click', ['$event.target']) onOutsideClick(targetElement: any): void {
@@ -170,15 +194,13 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	}
 
 	onNavigateSelection(direction: number) {
-		setTimeout(() => {
-			this.currentIdx = Math.max(
-				0,
-				Math.min(
-					this.currentIdx + direction,
-					this.getMaxItems(this.filteredData) - 1
-				)
-			);
-		});
+		this.currentIdx = Math.max(
+			0,
+			Math.min(
+				this.currentIdx + direction,
+				this.getMaxItems(this.filteredData) - 1
+			)
+		);
 	}
 
 	onChangeSearch(): void {

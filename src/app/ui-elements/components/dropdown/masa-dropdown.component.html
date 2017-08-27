@@ -1,4 +1,4 @@
-<div [ngClass]="{ 'dropdown-wrapper': true, 'disabled': disabled, 'open': isOpen }">
+<div [ngClass]="{ 'dropdown-wrapper': true, 'disabled': disabled, 'open': isOpen }" tabindex="0" (keydown)="onWrapperKeydown($event)">
 	<div class="dropdown-toggle" (click)="onToggle($event)">
 		<div class="dropdown-display">
 			<ng-container *ngIf="selectedItem">
