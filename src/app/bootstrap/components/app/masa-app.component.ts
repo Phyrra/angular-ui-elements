@@ -40,11 +40,13 @@ export class MasaAppComponent implements OnInit {
 	someComplexData: any[] = [{
 		title: 'Hans Muster',
 		items: [{
+			id: 1,
 			accountOwner: 'Hans Muster',
 			accountNumber: '520.184.004',
 			accountName: 'Erbschaft',
 			saldo: -215.66
 		}, {
+			id: 2,
 			accountOwner: 'Hans Muster',
 			accountNumber: '520.184.300',
 			accountName: 'Familie',
@@ -53,11 +55,13 @@ export class MasaAppComponent implements OnInit {
 	}, {
 		title: 'Eva Loveless',
 		items: [{
+			id: 3,
 			accountOwner: 'Eva Loveless',
 			accountNumber: '123.456.001',
 			accountName: 'Hauptkonto',
 			saldo: 123235
 		}, {
+			id: 4,
 			accountOwner: 'Eva Loveless',
 			accountNumber: '123.456.002',
 			accountName: 'Zweitkonto',
