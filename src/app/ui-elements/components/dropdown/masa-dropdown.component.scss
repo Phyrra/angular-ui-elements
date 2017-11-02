@@ -110,8 +110,12 @@
 				cursor: pointer;
 
 				&.selected {
-					background-color: $hover-color;
+					background-color: $selected-color;
 				}
+
+        &:hover {
+          background-color: $hover-color;
+        }
 			}
 
 			.dropdown-group {

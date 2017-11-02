@@ -47,8 +47,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	isGrouped: boolean;
 	showSearch: boolean;
 
-	currentIdx: number = -1;
-
 	/**
 	 * Constructor of the Component
 	 *
@@ -112,7 +110,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 					break;
 				case 13: // ENTER
-					this.onSelectCurrent();
+					this.onSelect(this.selectedItem);
 
 					break;
 				case 38: // UP
@@ -132,13 +130,12 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 					break;
 				case 38: // UP
 					this.onNavigateSelection(-1);
-					this.onSelectCurrent();
+					this.onSelect(this.selectedItem);
 
 					break;
 				case 40: // DOWN
-					console.log('hier');
 					this.onNavigateSelection(1);
-					this.onSelectCurrent();
+					this.onSelect(this.selectedItem);
 
 					break;
 			}
@@ -178,10 +175,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		}
 
 		this.isOpen = !this.isOpen;
-
-		if (this.isOpen) {
-			this.evaluateCurrentIndex();
-		}
 	}
 
 	/**
@@ -189,15 +182,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 */
 	onOpen(): void {
 		this.isOpen = true;
-		this.evaluateCurrentIndex();
-	}
-
-	private evaluateCurrentIndex(): void {
-		if (this.selectedItem) {
-			this.currentIdx = this.selectedItem.idx;
-		} else {
-			this.currentIdx = -1;
-		}
 	}
 
 	/**
@@ -216,7 +200,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 */
 	onSelect(item: any): void {
 		this.selectedItem = item;
-		this.evaluateCurrentIndex();
 
 		if (this.onTouch) {
 			this.onTouch();
@@ -229,54 +212,35 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		this.onClose();
 	}
 
-	// TODO: Rethink mouse control
-
-	/**
-	 * Handles the mouse entering of an option
-	 *
-	 * @param {any} item - the internal item that is hovered
-	 */
-	onMouseEnter(item: any): void {
-		this.currentIdx = item.idx;
-	}
-
-	/**
-	 * Handles the mouse leaving of the options block
-	 */
-	onMouseLeave(): void {
-		this.currentIdx = -1;
-	}
-
-	/**
-	 * Handles the selection of the currently highlighted item
-	 */
-	onSelectCurrent(): void {
-		if (this.currentIdx === -1) {
-			return;
-		}
-
-		this.onSelect(
-			this.getAllItems(this.filteredData)
-				.find(elem => elem.idx === this.currentIdx)
-		);
-	}
-
 	/**
 	 * Handles the navigation of the highlighted item
 	 *
 	 * @param {number} direction - either up (-1) or down (1)
 	 */
 	onNavigateSelection(direction: number) {
-		this.currentIdx = Math.max(
+		const allItems: any[] = this.getAllItems(this.filteredData);
+
+		let currentIdx;
+		if (this.selectedItem) {
+		  currentIdx = allItems.findIndex(elem => elem.id === this.selectedItem.id);
+		} else {
+		  currentIdx = -1;
+		}
+
+		currentIdx = Math.max(
 			0,
 			Math.min(
-				this.currentIdx + direction,
+				currentIdx + direction,
 				this.getMaxItems(this.filteredData) - 1
 			)
 		);
 
-		const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[this.currentIdx];
-		this.scrollToElement(selectedElement, direction);
+		this.selectedItem = allItems[currentIdx];
+
+		if (this.isOpen) {
+		  const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[currentIdx];
+		  this.scrollToElement(selectedElement, direction);
+		}
 	}
 
 	private scrollToElement(elem: HTMLElement, direction: number): void {
@@ -311,7 +275,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	onChangeSearch(): void {
 		if (!this.searchTerm) {
 			this.filteredData = this.data;
-			this.numberFilteredItems();
 
 			return;
 		}
@@ -332,22 +295,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		} else {
 			this.filteredData = this.filterItems(this.data);
 		}
-
-		const numberedItems = this.numberFilteredItems();
-
-		if (this.selectedItem) {
-			const lastSelectedItem = numberedItems.find(elem => elem.id === this.selectedItem.id);
-
-			if (lastSelectedItem) {
-				this.currentIdx = lastSelectedItem.idx;
-			} else {
-				this.currentIdx = -1;
-
-				// We don't want to delete the selected item in this case!
-			}
-		} else {
-			this.currentIdx = -1;
-		}
 	}
 
 	private filterItems(items: any[]): any[] {
@@ -358,15 +305,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 				return (_.get(item, key) || '').toString().toLocaleLowerCase().indexOf(lowerSearch) > -1;
 			});
 		});
-	}
-
-	private numberFilteredItems(): any[] {
-		const allFilteredItems = this.getAllItems(this.filteredData);
-
-		allFilteredItems
-			.forEach((item, idx) => item.idx = idx);
-
-		return allFilteredItems;
 	}
 
 	private isGroup(): boolean {

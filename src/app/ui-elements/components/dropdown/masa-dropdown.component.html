@@ -20,7 +20,7 @@
 			<input [(ngModel)]="searchTerm" (ngModelChange)="onChangeSearch()" />
 		</div>
 
-		<div class="dropdown-option-list" (mouseleave)="onMouseLeave()">
+		<div class="dropdown-option-list">
 			<ng-container *ngIf="isGrouped">
 				<div *ngFor="let group of filteredData" class="dropdown-group">
 					<div class="dropdown-group-title">
@@ -29,11 +29,10 @@
 
 					<div
 						*ngFor="let item of group.items"
-						[ngClass]="{ 'dropdown-option': true, 'selected': item.idx === currentIdx || (currentIdx === -1 && selectedItem?.id === item.id) }"
+						[ngClass]="{ 'dropdown-option': true, 'selected': item.id === selectedItem?.id }"
 						(click)="onSelect(item)"
-						(mouseenter)="onMouseEnter(item)"
 					>
-						<ng-template [ngOutletContext]="{ item: item, $index: item.idx }" [ngTemplateOutlet]="option"></ng-template>
+						<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
 					</div>
 				</div>
 			</ng-container>
@@ -41,11 +40,10 @@
 			<ng-container *ngIf="!isGrouped">
 				<div
 					*ngFor="let item of filteredData"
-					[ngClass]="{ 'dropdown-option': true, 'selected': item.idx === currentIdx || (currentIdx === -1 && selectedItem?.id === item.id) }"
+					[ngClass]="{ 'dropdown-option': true, 'selected': item.id === selectedItem?.id }"
 					(click)="onSelect(item)"
-					(mouseenter)="onMouseEnter(item)"
 				>
-					<ng-template [ngOutletContext]="{ item: item, $index: item.idx }" [ngTemplateOutlet]="option"></ng-template>
+					<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
 				</div>
 			</ng-container>
 		</div>
