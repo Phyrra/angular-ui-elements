@@ -9,6 +9,11 @@ import 'rxjs/add/observable/of';
 	styleUrls: ['./masa-app.component.scss']
 })
 export class MasaAppComponent implements OnInit {
+  item1: any;
+  item2: any;
+  item3: any;
+  item4: any;
+
 	someData: any[] = [{
 		id: 1,
 		name: 'A'

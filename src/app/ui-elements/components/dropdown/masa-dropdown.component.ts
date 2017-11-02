@@ -31,7 +31,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@Input() noSearch: number = 0;
 	@Input() disabled: boolean;
 
-	@ContentChild(TemplateRef) template;
+	@ContentChild(TemplateRef) template: TemplateRef<any>;
 	@ContentChild('option', { read: TemplateRef }) option;
 	@ContentChild('display', { read: TemplateRef }) display;
 
@@ -69,7 +69,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * Register callback for ControlValueAccessor onChange,
 	 * sets the function to be called when the value within is changed
 	 *
-	 * @param {Function} fn - the funciton to be called
+	 * @param {Function} fn - the function to be called
 	 */
 	registerOnChange(fn: Function): void {
 		this.onModelChange = fn;
@@ -99,9 +99,11 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * @param {KeyboardEvent} $event - the keyboard event
 	 */
 	onWrapperKeydown($event: KeyboardEvent): void {
-		if (this.disabled) {
+	  if (this.disabled) {
 			return;
 		}
+
+		$event.preventDefault();
 
 		if (this.isOpen) {
 			switch ($event.which) {
