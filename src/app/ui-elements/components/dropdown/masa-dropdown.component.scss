@@ -74,6 +74,8 @@
 			left: -1px;
 			right: -1px;
 
+			margin-bottom: $default-margin;
+
 			background-color: $content-background;
 			color: $content-text-color;
 
@@ -96,6 +98,11 @@
 
 					font-size: inherit;
 				}
+			}
+
+			.dropdown-option-list {
+				max-height: $foldout-max-height;
+				overflow-y: auto;
 			}
 
 			.dropdown-option {
