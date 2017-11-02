@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 
 @Component({
 	selector: 'masa-app',
@@ -9,10 +10,11 @@ import 'rxjs/add/observable/of';
 	styleUrls: ['./masa-app.component.scss']
 })
 export class MasaAppComponent implements OnInit {
-  item1: any;
-  item2: any;
-  item3: any;
-  item4: any;
+	item1: any;
+	item2: any;
+	item3: any;
+	item4: any;
+	item5: any;
 
 	someData: any[] = [{
 		id: 1,
@@ -118,5 +120,33 @@ export class MasaAppComponent implements OnInit {
 
 	onValueSelected(item: any): void {
 		console.log(item);
+	}
+
+	autocompleteSource(text: string): Observable<any> {
+		return Observable.of(
+			[
+				{ name: 'Albert Assler', abbreviation: 'AA' },
+				{ name: 'Berta Bloomberg', abbreviation: 'BB' },
+				{ name: 'Charles Costanza', abbreviation: 'CC' },
+				{ name: 'Donald Duck', abbreviation: 'DD' },
+				{ name: 'Erwin Ernst', abbreviation: 'EE' },
+				{ name: 'Felix Fuchs', abbreviation: 'FF' },
+				{ name: 'Gustav Gans', abbreviation: 'GG' },
+				{ name: 'Herbert Hollinger', abbreviation: 'HH' },
+				{ name: 'Ingo Itzwin', abbreviation: 'II' }
+			]
+			.filter(user => {
+				const lowerSearch = (text || '').toLowerCase();
+
+				return user.name.toLowerCase().includes(lowerSearch) ||
+						user.abbreviation.toLowerCase().includes(lowerSearch) ||
+						true; // TO TEST
+			})
+		)
+		.delay(1000);
+	}
+
+	userToString(user: any): string {
+		return `${user.name} (${user.abbreviation})`;
 	}
 }

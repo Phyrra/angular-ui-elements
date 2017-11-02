@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener, ElementRef } from '@angular/core';
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Input } from '@angular/core';
 import { ContentChild, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forwardRef } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
+import { KEY_CODE } from '../../constants';
 
 import * as _ from 'lodash';
 
 const DROPDOWN_VALUE_ACCESSOR = {
 	name: 'masaDropdownValueAccessor',
 	provide: NG_VALUE_ACCESSOR,
-	useExisting: forwardRef(() => MasaDropdownComponent),
+	useExisting: forwardRef(() => MasaDropdownComponent), // tslint:disable-line:no-use-before-declare
 	multi: true
 };
 
@@ -107,35 +106,35 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 		if (this.isOpen) {
 			switch ($event.which) {
-				case 27: // ESC
+				case KEY_CODE.ESC:
 					this.onClose();
 
 					break;
-				case 13: // ENTER
+				case KEY_CODE.ENTER:
 					this.onSelect(this.selectedItem);
 
 					break;
-				case 38: // UP
+				case KEY_CODE.UP_ARROW:
 					this.onNavigateSelection(-1);
 
 					break;
-				case 40: // DOWN
+				case KEY_CODE.DOWN_ARROW:
 					this.onNavigateSelection(1);
 
 					break;
 			}
 		} else {
 			switch ($event.which) {
-				case 13: // ENTER
+				case KEY_CODE.ENTER:
 					this.onOpen();
 
 					break;
-				case 38: // UP
+				case KEY_CODE.UP_ARROW:
 					this.onNavigateSelection(-1);
 					this.onSelect(this.selectedItem);
 
 					break;
-				case 40: // DOWN
+				case KEY_CODE.DOWN_ARROW:
 					this.onNavigateSelection(1);
 					this.onSelect(this.selectedItem);
 

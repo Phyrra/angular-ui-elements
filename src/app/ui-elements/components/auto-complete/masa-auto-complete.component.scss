@@ -1,0 +1,76 @@
+@import '~scss/definitions';
+@import '~scss/mixins';
+
+$elem-padding: $default-padding * 0.75;
+
+:host {
+  .wrapper {
+    position: relative;
+
+    background-color: $input-background;
+    color: inherit;
+
+    &.disabled {
+      input {
+        // TODO?
+      }
+    }
+
+    &.open {
+      input {
+        outline: none;
+      }
+    }
+
+    input {
+      @include input();
+      width: 100%;
+    }
+
+    .foldout {
+      position: absolute;
+      z-index: $dropdown-z-index;
+
+      margin-top: -1px;
+      margin-bottom: $default-margin;
+
+      background-color: $content-background;
+      color: $content-text-color;
+
+      border: $element-border;
+      border-radius: 0 0 $element-border-radius $element-border-radius;
+
+      max-height: 256px;
+      overflow-y: auto;
+
+      min-width: 100%;
+
+      .loading {
+        padding: $default-padding;
+
+        .loading-indicator {
+          @include loading-indicator($content-text-color);
+          display: inline-block;
+          margin-left: $default-margin;
+        }
+      }
+
+      .no-items {
+        padding: $default-padding;
+      }
+
+      .option {
+        padding: $default-padding;
+        cursor: pointer;
+
+        &:hover  {
+          background-color: $hover-color;
+        }
+
+        &.selected  {
+          background-color: $selected-color;
+        }
+      }
+    }
+  }
+}

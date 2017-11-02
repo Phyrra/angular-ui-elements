@@ -1,0 +1,37 @@
+<div
+    [ngClass]="{ 'wrapper': true, 'disabled': disabled, 'open': isOpen }"
+>
+  <input
+    [(ngModel)]="search"
+    (keydown)="onKeyDown($event)"
+    (blur)="onBlur($event)"
+    [disabled]="disabled"
+  />
+
+  <div class="foldout" *ngIf="isOpen">
+    <div *ngIf="isLoading" class="loading">
+      <span>{{ loadingText || 'Loading' }}</span>
+      <div class="loading-indicator"></div>
+    </div>
+
+    <ng-container *ngIf="!isLoading && items">
+      <ng-container *ngIf="items.length === 0">
+        <div class="no-items">{{ noItemsText || 'No items found' }}</div>
+      </ng-container>
+
+      <ng-container *ngIf="items.length > 0">
+        <div
+            *ngFor="let item of items; let i = index"
+            class="option"
+            (click)="selectItemAtIndex(i)"
+            [class.selected]="i === selectedIndex"
+        >
+          <ng-template
+              [ngOutletContext]="{ item: item }"
+              [ngTemplateOutlet]="option"
+          ></ng-template>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
