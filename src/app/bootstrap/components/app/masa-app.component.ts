@@ -30,6 +30,18 @@ export class MasaAppComponent implements OnInit {
 	}, {
 		id: 7,
 		name: 'G'
+	}, {
+		id: 8,
+		name: 'H'
+	}, {
+		id: 9,
+		name: 'I'
+	}, {
+		id: 10,
+		name: 'J'
+	}, {
+		id: 11,
+		name: 'K'
 	}];
 
 	someGroupedData: any[] = [{

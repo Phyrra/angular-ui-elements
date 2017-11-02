@@ -229,6 +229,8 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		this.onClose();
 	}
 
+	// TODO: Rethink mouse control
+
 	/**
 	 * Handles the mouse entering of an option
 	 *
@@ -272,6 +274,33 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 				this.getMaxItems(this.filteredData) - 1
 			)
 		);
+
+		const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[this.currentIdx];
+		this.scrollToElement(selectedElement, direction);
+	}
+
+	private scrollToElement(elem: HTMLElement, direction: number): void {
+		const bodyElement: HTMLElement = document.body;
+		const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option-list')[0];
+
+		const wrapperRect: ClientRect = wrapperElement.getBoundingClientRect();
+		const elementRect: ClientRect = elem.getBoundingClientRect();
+
+		const elementTop: number = elementRect.top + bodyElement.scrollTop;
+		const elementBottom: number = elementRect.bottom + bodyElement.scrollTop;
+
+		const wrapperTop: number = wrapperRect.top + bodyElement.scrollTop;
+		const wrapperBottom: number = wrapperRect.bottom + bodyElement.scrollTop;
+
+		if (direction > 0) {
+			if (elementBottom > wrapperBottom) {
+				wrapperElement.scrollTop += (elementBottom - wrapperBottom);
+			}
+		} else if (direction < 0) {
+			if (elementTop < wrapperTop) {
+				wrapperElement.scrollTop -= (wrapperTop - elementTop);
+			}
+		}
 	}
 
 	/**
