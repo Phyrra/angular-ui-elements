@@ -231,7 +231,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			0,
 			Math.min(
 				currentIdx + direction,
-				this.getMaxItems(this.filteredData) - 1
+				allItems.length - 1
 			)
 		);
 
@@ -326,11 +326,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			return true;
 		}
 
-		return this.noSearch < this.getMaxItems(this.data);
-	}
-
-	private getMaxItems(data: any): number {
-		return this.getAllItems(data).length;
+		return this.noSearch < this.getAllItems(this.data).length;
 	}
 
 	private getAllItems(data: any): any[] {
