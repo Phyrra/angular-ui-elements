@@ -19,7 +19,7 @@ import { MasaAutoCompleteComponent } from './components/auto-complete/masa-auto-
 	],
 	exports: [
 		MasaDropdownComponent,
-    MasaAutoCompleteComponent
+		MasaAutoCompleteComponent
 	]
 })
 export class MasaUiElementsModule { }
