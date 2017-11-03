@@ -40,10 +40,12 @@ $elem-padding: $default-padding * 0.75;
       border: $element-border;
       border-radius: 0 0 $element-border-radius $element-border-radius;
 
-      max-height: 256px;
-      overflow-y: auto;
-
       min-width: 100%;
+
+      .auto-complete-option-list {
+        max-height: 256px;
+        overflow-y: auto;
+      }
 
       .loading {
         padding: $default-padding;

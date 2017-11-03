@@ -19,14 +19,17 @@
         <div class="no-items">{{ noItemsText || 'No items found' }}</div>
       </ng-container>
 
-      <ng-container *ngIf="items.length > 0">
-        <div *ngIf="maxItems && overflow && items.length >= maxItems">
-          <ng-template
+      <div *ngIf="maxItems && overflow && items.length >= maxItems">
+        <ng-template
             [ngOutletContext]="{ number: items.length }"
             [ngTemplateOutlet]="overflow"
-          ></ng-template>
-        </div>
+        ></ng-template>
+      </div>
 
+      <div
+          class="auto-complete-option-list"
+          *ngIf="items.length > 0"
+      >
         <div
             *ngFor="let item of items; let i = index"
             class="option"
@@ -38,7 +41,7 @@
               [ngTemplateOutlet]="option"
           ></ng-template>
         </div>
-      </ng-container>
+      </div>
     </ng-container>
   </div>
 </div>

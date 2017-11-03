@@ -7,6 +7,7 @@ import { forwardRef } from '@angular/core';
 import { KEY_CODE } from '../../constants';
 
 import * as _ from 'lodash';
+import { scrollToElement } from '../../helpers';
 
 const DROPDOWN_VALUE_ACCESSOR = {
 	name: 'masaDropdownValueAccessor',
@@ -97,11 +98,13 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * @param {KeyboardEvent} $event - the keyboard event
 	 */
 	onWrapperKeydown($event: KeyboardEvent): void {
-	  if (this.disabled) {
+		if (this.disabled) {
 			return;
 		}
 
-		$event.preventDefault();
+		if ($event.which !== KEY_CODE.TAB) {
+			$event.preventDefault();
+		}
 
 		if (this.isOpen) {
 			switch ($event.which) {
@@ -222,9 +225,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 		let currentIdx;
 		if (this.selectedItem) {
-		  currentIdx = allItems.findIndex(elem => elem.id === this.selectedItem.id);
+			currentIdx = allItems.findIndex(elem => elem.id === this.selectedItem.id);
 		} else {
-		  currentIdx = -1;
+			currentIdx = -1;
 		}
 
 		currentIdx = Math.max(
@@ -238,32 +241,10 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		this.selectedItem = allItems[currentIdx];
 
 		if (this.isOpen) {
-		  const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[currentIdx];
-		  this.scrollToElement(selectedElement, direction);
-		}
-	}
+			const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[currentIdx];
+			const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option-list')[0];
 
-	private scrollToElement(elem: HTMLElement, direction: number): void {
-		const bodyElement: HTMLElement = document.body;
-		const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option-list')[0];
-
-		const wrapperRect: ClientRect = wrapperElement.getBoundingClientRect();
-		const elementRect: ClientRect = elem.getBoundingClientRect();
-
-		const elementTop: number = elementRect.top + bodyElement.scrollTop;
-		const elementBottom: number = elementRect.bottom + bodyElement.scrollTop;
-
-		const wrapperTop: number = wrapperRect.top + bodyElement.scrollTop;
-		const wrapperBottom: number = wrapperRect.bottom + bodyElement.scrollTop;
-
-		if (direction > 0) {
-			if (elementBottom > wrapperBottom) {
-				wrapperElement.scrollTop += (elementBottom - wrapperBottom);
-			}
-		} else if (direction < 0) {
-			if (elementTop < wrapperTop) {
-				wrapperElement.scrollTop -= (wrapperTop - elementTop);
-			}
+			scrollToElement(selectedElement, wrapperElement, direction);
 		}
 	}
 

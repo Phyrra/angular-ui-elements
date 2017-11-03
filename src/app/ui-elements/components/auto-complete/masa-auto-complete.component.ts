@@ -4,6 +4,7 @@ import { ContentChild, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forwardRef } from '@angular/core';
 import { KEY_CODE } from '../../constants';
+import { scrollToElement } from 'app/ui-elements/helpers';
 
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -126,7 +127,9 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 				this.selectedIndex = (this.selectedIndex + this.items.length + dir) % this.items.length;
 
 				const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('option')[this.selectedIndex];
-				this.scrollToSelection(selectedElement, this.selectedIndex - prevIndex);
+				const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('auto-complete-option-list')[0];
+
+				scrollToElement(selectedElement, wrapperElement, this.selectedIndex - prevIndex);
 			}
 		}
 	}
@@ -233,29 +236,5 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 		}
 
 		this.items = null;
-	}
-
-	private scrollToSelection(elem: HTMLElement, direction: number) {
-		const bodyElement: HTMLElement = document.body;
-		const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('foldout')[0];
-
-		const wrapperRect: ClientRect = wrapperElement.getBoundingClientRect();
-		const elementRect: ClientRect = elem.getBoundingClientRect();
-
-		const elementTop: number = elementRect.top + bodyElement.scrollTop;
-		const elementBottom: number = elementRect.bottom + bodyElement.scrollTop;
-
-		const wrapperTop: number = wrapperRect.top + bodyElement.scrollTop;
-		const wrapperBottom: number = wrapperRect.bottom + bodyElement.scrollTop;
-
-		if (direction > 0) {
-			if (elementBottom > wrapperBottom) {
-				wrapperElement.scrollTop += (elementBottom - wrapperBottom);
-			}
-		} else if (direction < 0) {
-			if (elementTop < wrapperTop) {
-				wrapperElement.scrollTop -= (wrapperTop - elementTop);
-			}
-		}
 	}
 }
