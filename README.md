@@ -14,7 +14,9 @@ Run `yarn build` to build the project. The build artifacts will be stored in the
 
 A working example can be found [here](https://masa-dropdown.000webhostapp.com/).
 
-## Usage
+## Dropdown
+
+### Usage
 
 The data must come in form of an array, that holds items with an `id` field (note, `name` is not important).
 
@@ -87,8 +89,66 @@ The model can be bound like any other input with either `[(ngModel)]` and `(ngMo
 
 | Input       | Description                                                                                                  | Example                      |
 | ----------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------- |
-| data        | The data                                                                                                     | `data="someData`             |
+| data        | The data                                                                                                     | `[data]="someData`           |
 | placeholder | A placeholder (string) to show while nothing is selected                                                     | `placeholder="-- choose --"` |
-| search      | An array of fields that may be searched. If none is provided, the search will not be available               | `search="['name']"`          |
-| noSearch    | A numeric limit from which the search will be shown. Only shows search if there are more than 10 items       | `noSearch="10"`              |
-| disabled    | A flag to disable the input                                                                                  | `disabled="true"`            |
+| search      | An array of fields that may be searched. If none is provided, the search will not be available               | `[search]="['name']"`        |
+| noSearch    | A numeric limit from which the search will be shown. Only shows search if there are more than 10 items       | `[noSearch]="10"`            |
+| disabled    | A flag to disable the input                                                                                  | `[disabled]="true"`          |
+
+## Auto complete
+
+### Usage
+
+The data is coming from an async datasource in form of an `Observable`. For this, bind a function, returning an `Observable` to the `source` attribute.
+The resolved data must be an array.
+
+There are no restrictions on the items within the result set. A function to turn the item into a string must be provided. This will get executed, when an element of the auto-complete list is selected.
+
+To use the component, a template to render the items must be defined with the angular-id `#option`.
+
+```
+<masa-auto-complete
+	[source]="asyncDataSource"
+	[itemRenderer]="itemToString"
+>
+	<ng-template #option let-user="item">
+		{{ user.firstName }} {{ user.lastName }}
+	</ng-template>
+</masa-auto-complete>
+```
+
+A second template to render a message in case of a data-overflow may be provided. This will be shown, if the result set is bigger than the specified maximum amount of items to be displayed.
+
+```
+<masa-auto-complete
+	[source]="asyncDataSource"
+	[itemRenderer]="itemToString"
+	[maxItems]="3"
+>
+	<ng-template #option let-user="item">
+		{{ user.firstName }} {{ user.lastName }}
+	</ng-template>
+
+	<ng-template #overflow let-number="number">
+		<div class="overflow-warning">
+			There are {{ number }} items, only the first 3 are shown
+		</div>
+	</ng-template>
+</masa-auto-complete>
+```
+
+The model can be bound like any other input with either `[(ngModel)]` and `(ngModelChange)` or using `FormGroup`.
+
+**Important note:** The returned value is the item object, not the string from the input field.
+
+### Input
+
+| Input           | Description                                                                                                                                                 | Example                         |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| source          | A function returning an `Observable` data source: `(text: string) => Observable<any[]>`                                                                     | `[data]="asyncDataSource`       |
+| itemRenderer    | A function turning the selected item into a string: `(item: any) => string`. If none is provided, the JS `.toString()` will be used.                        | `[itemRenderer]="itemToString"` |
+| minSearchLength | The minimum length of the typed text before an API request is started                                                                                       | `[minSearchLength]="3"`         |
+| maxItems        | The maximum number of items displayed in the list. If the result set exceeds this number, a warning will be shown, if a corresponding template is provided. | `[maxItems]="10"`               |
+| loadingText     | The text to be shown while the API request is pending                                                                                                       | `loadingText="Loading"`         |
+| noItemsText     | The text to be shown, when the API request did not return any results                                                                                       | `noItemsText="No items found`   |
+| disabled        | A flag to disable the input                                                                                                                                 | `[disabled]="true"`             |

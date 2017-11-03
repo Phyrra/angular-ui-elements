@@ -139,8 +139,7 @@ export class MasaAppComponent implements OnInit {
 				const lowerSearch = (text || '').toLowerCase();
 
 				return user.name.toLowerCase().includes(lowerSearch) ||
-						user.abbreviation.toLowerCase().includes(lowerSearch) ||
-						true; // TO TEST
+						user.abbreviation.toLowerCase().includes(lowerSearch);
 			})
 		)
 		.delay(1000);

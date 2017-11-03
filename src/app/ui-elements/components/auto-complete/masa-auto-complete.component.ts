@@ -40,12 +40,12 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	
 	@Input() disabled: boolean;
 
-  @ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
-	@Input() optionRenderer: (item: any) => string;
+	@ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
+	@Input() itemRenderer: (item: any) => string;
 
 	@Input() minSearchLength;
 
-  @ContentChild('overflow', { read: TemplateRef }) overflow: TemplateRef<any>;
+	@ContentChild('overflow', { read: TemplateRef }) overflow: TemplateRef<any>;
 	@Input() maxItems: number;
 
 	private onTouch: Function;
@@ -145,7 +145,11 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	// Writes the internal value when the model is changed from the "outside"
 	writeValue(value: any): void {
 		if (value) {
-			this.search = this.optionRenderer(value);
+			if (typeof this.itemRenderer === 'function') {
+				this.search = this.itemRenderer(value);
+			} else {
+				this.search = value.toString();
+			}
 		} else {
 			this.search = '';
 		}

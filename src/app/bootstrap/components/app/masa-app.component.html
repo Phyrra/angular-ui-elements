@@ -52,8 +52,8 @@
 	[(ngModel)]="item5"
 	(ngModelChange)="onValueSelected($event)"
 	[source]="autocompleteSource"
-	[optionRenderer]="userToString"
-	[minSearchLength]="3"
+	[itemRenderer]="userToString"
+	[minSearchLength]="2"
 	[maxItems]="3"
 >
 	<ng-template #option let-user="item">
