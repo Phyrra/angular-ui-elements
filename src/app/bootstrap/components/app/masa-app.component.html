@@ -54,8 +54,15 @@
 	[source]="autocompleteSource"
 	[optionRenderer]="userToString"
 	[minSearchLength]="3"
+	[maxItems]="3"
 >
 	<ng-template #option let-user="item">
 		{{ user.name }} ({{ user.abbreviation }})
+	</ng-template>
+
+	<ng-template #overflow let-number="number">
+		<div class="overflow-warning">
+			There are {{ number }} items, only the first 3 are shown
+		</div>
 	</ng-template>
 </masa-auto-complete>

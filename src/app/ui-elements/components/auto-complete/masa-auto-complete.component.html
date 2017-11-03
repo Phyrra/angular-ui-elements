@@ -20,6 +20,13 @@
       </ng-container>
 
       <ng-container *ngIf="items.length > 0">
+        <div *ngIf="maxItems && overflow && items.length >= maxItems">
+          <ng-template
+            [ngOutletContext]="{ number: items.length }"
+            [ngTemplateOutlet]="overflow"
+          ></ng-template>
+        </div>
+
         <div
             *ngFor="let item of items; let i = index"
             class="option"

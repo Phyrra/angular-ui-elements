@@ -39,10 +39,13 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	
 	@Input() disabled: boolean;
 
-	@ContentChild(TemplateRef) option;
+  @ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
 	@Input() optionRenderer: (item: any) => string;
 
 	@Input() minSearchLength;
+
+  @ContentChild('overflow', { read: TemplateRef }) overflow: TemplateRef<any>;
+	@Input() maxItems: number;
 
 	private onTouch: Function;
 	private onModelChange: Function;

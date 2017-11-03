@@ -47,4 +47,11 @@
 			}
 		}
 	}
+
+	masa-auto-complete /deep/ {
+		.overflow-warning {
+			background-color: $warning-color;
+			padding: $default-padding;
+		}
+	}
 }
