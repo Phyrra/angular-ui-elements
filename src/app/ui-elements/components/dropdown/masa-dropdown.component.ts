@@ -216,6 +216,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		}
 
 		this.onClose();
+		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
 	}
 
 	/**
@@ -281,12 +282,22 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
+	/**
+	 * Handles the focus event.
+	 */
 	onFocus(): void {
 		this.hasFocus = true;
+
+		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
 	}
 
+	/**
+	 * Handles the blur event.
+	 */
 	onBlur(): void {
 		this.hasFocus = false;
+
+		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
 	}
 
 	private filterItems(items: any[]): any[] {
