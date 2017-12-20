@@ -20,6 +20,8 @@ $label-color: #999;
 
 $warning-color: #f5bc7f;
 
+$active-color: blue;
+
 /*
  * FONTS
  */
@@ -53,3 +55,10 @@ $element-border: $element-border-size solid #ccc;
  */
 
 $dropdown-z-index: 10;
+
+/*
+ * TRANSITIONS
+ */
+
+$focus-transition-time: 0.3s;
+$focus-transition: all $focus-transition-time linear;

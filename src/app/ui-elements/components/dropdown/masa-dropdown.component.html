@@ -1,3 +1,7 @@
+<div [ngClass]="{ 'dropdown-label': true, 'no-value': !selectedItem }">
+	{{ label }}&nbsp;
+</div>
+
 <div
 	class="dropdown-wrapper"
 	tabindex="0"
@@ -12,7 +16,6 @@
 			</ng-container>
 
 			<ng-container *ngIf="!selectedItem">
-				{{ placeholder }}
 				&nbsp;
 			</ng-container>
 		</div>

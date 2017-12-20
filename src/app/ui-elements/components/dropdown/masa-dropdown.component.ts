@@ -26,7 +26,7 @@ const DROPDOWN_VALUE_ACCESSOR = {
 	]
 })
 export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
-	@Input() placeholder: string;
+	@Input() label: string;
 	@Input() data: any;
 	@Input() search: string[];
 	@Input() noSearch: number = 0;

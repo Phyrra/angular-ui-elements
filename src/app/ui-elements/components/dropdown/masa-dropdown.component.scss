@@ -1,8 +1,22 @@
 @import "~scss/definitions";
 @import "~scss/mixins";
 
+$label-offset: $label-font-size + $default-padding;
+
 :host {
+	position: relative;
+
 	&.disabled {
+		.dropdown-label {
+			color: $input-disabled;
+
+			&.no-value {
+				font-size: inherit;
+
+				top: $label-offset;
+			}
+		}
+
 		.dropdown-wrapper {
 			.dropdown-toggle {
 				color: $input-disabled;
@@ -14,34 +28,100 @@
 		}
 	}
 
-	&.open {
+	&.focus:not(.disabled) {
+		.dropdown-label {
+			transition: $focus-transition;
+			transition-property: color, top, font-size;
+
+			font-size: $label-font-size;
+			top: 0;
+			color: $active-color;
+		}
+
 		.dropdown-wrapper {
-			.dropdown-toggle {
-				.dropdown-arrow {
-					box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
-					background-color: darken($input-background, 5%);
-				}
+			&::after {
+				transition: $focus-transition;
+				transition-property: left, right;
+
+				left: 0;
+				right: 0;
+			}
+
+			.dropdown-arrow .arrow-down {
+				transition: $focus-transition;
+				transition-property: border-top-color;
+
+				border-top-color: $active-color;
 			}
 		}
 	}
 
-	&.focus {
-		&:not(.open) {
-			outline: $element-border-size solid blue;
+	&:not(.focus):not(.disabled) {
+		.dropdown-label {
+			&.no-value {
+				transition: $focus-transition;
+				transition-property: color, top, font-size;
+
+				font-size: inherit;
+				top: $label-offset;
+				color: $label-color;
+			}
+
+			&:not(.no-value) {
+				transition: $focus-transition;
+				transition-property: color, top, font-size;
+
+				font-size: $label-font-size;
+				top: 0;
+				color: $label-color;
+			}
 		}
+
+		.dropdown-wrapper {
+			&::after {
+				transition: $focus-transition;
+				transition-property: left, right;
+
+				left: 50%;
+				right: 50%;
+			}
+
+			.dropdown-arrow .arrow-down {
+				transition: $focus-transition;
+				transition-property: border-top-color;
+
+				border-top-color: inherit;
+			}
+		}
+	}
+
+	.dropdown-label {
+		position: absolute;
+		left: 0;
+
+		pointer-events: none;
 	}
 
 	.dropdown-wrapper {
 		position: relative;
 
-		background-color: $input-background;
 		color: inherit;
 
-		border: $element-border;
-		border-radius: $element-border-radius;
+		padding-top: $label-font-size;
+		border-bottom: $element-border;
 
 		&:focus {
 			outline: none;
+		}
+
+		&::after {
+			content: '';
+			display: block;
+			height: $element-border-size * 2;
+			background-color: $active-color;
+
+			position: absolute;
+			bottom: -$element-border-size;
 		}
 
 		.dropdown-toggle {
@@ -52,12 +132,14 @@
 
 			.dropdown-display {
 				flex-grow: 1;
-				padding: $default-padding;
+				padding: $default-padding 0;
+
+				.placeholder {
+					color: $label-color;
+				}
 			}
 
 			.dropdown-arrow {
-				border-left: $element-border;
-
 				padding: $default-padding;
 
 				display: flex;
@@ -80,9 +162,10 @@
 			position: absolute;
 			z-index: $dropdown-z-index;
 
-			left: -1px;
-			right: -1px;
+			left: -$element-border-size;
+			right: -$element-border-size;
 
+			margin-top: $default-margin;
 			margin-bottom: $default-margin;
 
 			background-color: $content-background;

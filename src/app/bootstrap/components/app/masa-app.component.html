@@ -2,7 +2,7 @@
 
 <h3>Normal dropdown</h3>
 
-<masa-dropdown [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" placeholder="-- choose --">
+<masa-dropdown [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label">
 	<ng-template #option let-item="item">
 		{{ item.name }} ({{ item.id }})
 	</ng-template>
@@ -10,7 +10,7 @@
 
 <h3>Grouped</h3>
 
-<masa-dropdown [data]="someGroupedData" [(ngModel)]="item2" (ngModelChange)="onValueSelected($event)" [search]="['name']" placeholder="-- choose --">
+<masa-dropdown [data]="someGroupedData" [(ngModel)]="item2" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
 	<ng-template #option let-item="item">
 		{{ item.name }} ({{ item.id }})
 	</ng-template>
@@ -18,7 +18,7 @@
 
 <h3>Async Data</h3>
 
-<masa-dropdown [data]="someAsyncData" [(ngModel)]="item3" (ngModelChange)="onValueSelected($event)" [search]="['name']" placeholder="-- choose --">
+<masa-dropdown [data]="someAsyncData" [(ngModel)]="item3" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
 	<ng-template #option let-item="item">
 		{{ item.name }} ({{ item.id }})
 	</ng-template>
@@ -26,7 +26,7 @@
 
 <h3>Rendering Templates</h3>
 
-<masa-dropdown [data]="someComplexData" [(ngModel)]="item4" (ngModelChange)="onValueSelected($event)" [search]="['accountName', 'accountNumber']" placeholder="-- choose --">
+<masa-dropdown [data]="someComplexData" [(ngModel)]="item4" (ngModelChange)="onValueSelected($event)" [search]="['accountName', 'accountNumber']" label="-- choose --">
 	<ng-template #display let-account="item">
 		<div class="account-description">
 			{{ account.accountName }}, {{ account.accountOwner }}
@@ -46,7 +46,7 @@
 
 <h3>Disabled</h3>
 
-<masa-dropdown [data]="someData" [(ngModel)]="item5" (ngModelChange)="onValueSelected($event)" placeholder="-- choose --" [disabled]="true">
+<masa-dropdown [data]="someData" [(ngModel)]="item5" (ngModelChange)="onValueSelected($event)" label="-- choose --" [disabled]="true">
 	<ng-template #option let-item="item">
 		{{ item.name }}
 	</ng-template>
