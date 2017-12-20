@@ -1,4 +1,10 @@
-<div [ngClass]="{ 'dropdown-wrapper': true, 'disabled': disabled, 'open': isOpen }" tabindex="0" (keydown)="onWrapperKeydown($event)">
+<div
+	class="dropdown-wrapper"
+	tabindex="0"
+	(keydown)="onWrapperKeydown($event)"
+	(focus)="onFocus()"
+	(blur)="onBlur()"
+>
 	<div class="dropdown-toggle" (click)="onToggle()">
 		<div class="dropdown-display">
 			<ng-container *ngIf="selectedItem">
@@ -7,6 +13,7 @@
 
 			<ng-container *ngIf="!selectedItem">
 				{{ placeholder }}
+				&nbsp;
 			</ng-container>
 		</div>
 
@@ -17,7 +24,10 @@
 
 	<div class="dropdown-foldout" *ngIf="isOpen">
 		<div *ngIf="showSearch" class="dropdown-search">
-			<input [(ngModel)]="searchTerm" (ngModelChange)="onChangeSearch()" />
+			<input
+				[(ngModel)]="searchTerm"
+				(ngModelChange)="onChangeSearch()"
+			/>
 		</div>
 
 		<div class="dropdown-option-list">
@@ -33,6 +43,7 @@
 						(click)="onSelect(item)"
 					>
 						<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
+						&nbsp;
 					</div>
 				</div>
 			</ng-container>
@@ -44,6 +55,7 @@
 					(click)="onSelect(item)"
 				>
 					<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="option"></ng-template>
+					&nbsp;
 				</div>
 			</ng-container>
 		</div>

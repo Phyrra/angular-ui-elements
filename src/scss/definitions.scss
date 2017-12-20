@@ -44,8 +44,9 @@ $foldout-max-height: 256px;
  * BORDERS
  */
 
+$element-border-size: 1px;
 $element-border-radius: 2px;
-$element-border: 1px solid #ccc;
+$element-border: $element-border-size solid #ccc;
 
 /*
  * Z-INDEXES

@@ -15,6 +15,7 @@ export class MasaAppComponent implements OnInit {
 	item3: any;
 	item4: any;
 	item5: any;
+	item6: any;
 
 	someData: any[] = [{
 		id: 1,

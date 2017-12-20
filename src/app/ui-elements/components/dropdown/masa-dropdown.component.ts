@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HostListener, ElementRef } from '@angular/core';
 import { Input } from '@angular/core';
 import { ContentChild, TemplateRef } from '@angular/core';
+import { HostBinding } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forwardRef } from '@angular/core';
 import { KEY_CODE } from '../../constants';
@@ -29,7 +30,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@Input() data: any;
 	@Input() search: string[];
 	@Input() noSearch: number = 0;
-	@Input() disabled: boolean;
+	@HostBinding('class.disabled') @Input() disabled: boolean;
 
 	@ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
 	@ContentChild('display', { read: TemplateRef }) display: TemplateRef<any>;
@@ -37,7 +38,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	private onTouch: Function;
 	private onModelChange: Function;
 
-	isOpen: boolean = false;
+	@HostBinding('class.open') isOpen: boolean = false;
+	@HostBinding('class.focus') hasFocus: boolean = false;
+
 	selectedItem: any;
 	searchTerm: string;
 
@@ -276,6 +279,14 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		} else {
 			this.filteredData = this.filterItems(this.data);
 		}
+	}
+
+	onFocus(): void {
+		this.hasFocus = true;
+	}
+
+	onBlur(): void {
+		this.hasFocus = false;
 	}
 
 	private filterItems(items: any[]): any[] {

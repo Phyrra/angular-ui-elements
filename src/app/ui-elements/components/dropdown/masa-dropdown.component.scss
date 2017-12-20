@@ -2,6 +2,35 @@
 @import "~scss/mixins";
 
 :host {
+	&.disabled {
+		.dropdown-wrapper {
+			.dropdown-toggle {
+				color: $input-disabled;
+
+				.dropdown-arrow {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&.open {
+		.dropdown-wrapper {
+			.dropdown-toggle {
+				.dropdown-arrow {
+					box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+					background-color: darken($input-background, 5%);
+				}
+			}
+		}
+	}
+
+	&.focus {
+		&:not(.open) {
+			outline: $element-border-size solid blue;
+		}
+	}
+
 	.dropdown-wrapper {
 		position: relative;
 
@@ -13,27 +42,6 @@
 
 		&:focus {
 			outline: none;
-
-			&:not(.open) .dropdown-toggle {
-				outline: -webkit-focus-ring-color auto 5px;
-			}
-		}
-
-		&.disabled {
-			.dropdown-toggle {
-				color: $input-disabled;
-
-				.dropdown-arrow {
-					display: none;
-				}
-			}
-		}
-
-		&.open {
-			.dropdown-arrow {
-				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
-				background-color: darken($input-background, 5%);
-			}
 		}
 
 		.dropdown-toggle {
