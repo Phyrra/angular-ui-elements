@@ -1,0 +1,111 @@
+@import "~scss/definitions";
+@import "~scss/mixins";
+
+$label-offset: $label-font-size + $default-padding;
+
+:host {
+	position: relative;
+
+	&.disabled {
+		.input-label {
+			color: $input-disabled;
+
+			&.no-value {
+				font-size: inherit;
+
+				top: $label-offset;
+			}
+		}
+	}
+
+	&.focus:not(.disabled) {
+		.input-label {
+			transition: $focus-transition;
+			transition-property: color, top, font-size;
+
+			font-size: $label-font-size;
+			top: 0;
+			color: $active-color;
+		}
+
+		.input-wrapper {
+			&::after {
+				transition: $focus-transition;
+				transition-property: left, right;
+
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+
+	&:not(.focus):not(.disabled) {
+		.input-label {
+			&.no-value {
+				transition: $focus-transition;
+				transition-property: color, top, font-size;
+
+				font-size: inherit;
+				top: $label-offset;
+				color: $label-color;
+			}
+
+			&:not(.no-value) {
+				transition: $focus-transition;
+				transition-property: color, top, font-size;
+
+				font-size: $label-font-size;
+				top: 0;
+				color: $label-color;
+			}
+		}
+
+		.input-wrapper {
+			&::after {
+				transition: $focus-transition;
+				transition-property: left, right;
+
+				left: 50%;
+				right: 50%;
+			}
+		}
+	}
+
+	.input-label {
+		position: absolute;
+		left: 0;
+
+		pointer-events: none;
+	}
+
+	.input-wrapper {
+		position: relative;
+
+		color: inherit;
+
+		padding-top: $label-font-size;
+		border-bottom: $element-border;
+
+		input {
+			&:focus {
+				outline: none;
+			}
+
+			width: 100%;
+			border: none;
+			background-color: transparent;
+
+			padding: $default-padding 0;
+		}
+
+		&::after {
+			content: '';
+			display: block;
+			height: $element-border-size * 2;
+			background-color: $active-color;
+
+			position: absolute;
+			bottom: -$element-border-size;
+		}
+	}
+}

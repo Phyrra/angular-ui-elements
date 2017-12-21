@@ -1,6 +1,16 @@
+<h2>Input</h2>
+
+<h3>Normal Input</h3>
+
+<masa-input [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.."></masa-input>
+
+<h3>Disabled</h3>
+
+<masa-input [(ngModel)]="value2" (ngModelChange)="onValueSelected($event)" label="Type.." [disabled]="true"></masa-input>
+
 <h2>Dropdown</h2>
 
-<h3>Normal dropdown</h3>
+<h3>Normal Dropdown</h3>
 
 <masa-dropdown [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label">
 	<ng-template #option let-item="item">

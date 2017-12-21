@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 
 import { MasaDropdownComponent } from './components/dropdown/masa-dropdown.component';
 import { MasaAutoCompleteComponent } from './components/auto-complete/masa-auto-complete.component';
+import { MasaInputComponent } from './components/input/masa-input.component';
 
 @NgModule({
 	declarations: [
 		MasaDropdownComponent,
-		MasaAutoCompleteComponent
+		MasaAutoCompleteComponent,
+		MasaInputComponent
 	],
 	imports: [
 		CommonModule,
@@ -19,7 +21,8 @@ import { MasaAutoCompleteComponent } from './components/auto-complete/masa-auto-
 	],
 	exports: [
 		MasaDropdownComponent,
-		MasaAutoCompleteComponent
+		MasaAutoCompleteComponent,
+		MasaInputComponent
 	]
 })
 export class MasaUiElementsModule { }

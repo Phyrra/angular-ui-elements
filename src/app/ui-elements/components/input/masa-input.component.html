@@ -1,0 +1,14 @@
+<div *ngIf="label" [ngClass]="{ 'input-label': true, 'no-value': !value }">
+	{{ label }}
+</div>
+
+<div class="input-wrapper">
+	<input
+		type="text"
+		[(ngModel)]="value"
+		(ngModelChanges)="onModelChange($event)"
+		[disabled]="disabled"
+		(focus)="onFocus()"
+		(blur)="onBlur()"
+	/>
+</div>
