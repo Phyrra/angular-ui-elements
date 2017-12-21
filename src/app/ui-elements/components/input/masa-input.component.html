@@ -6,7 +6,7 @@
 	<input
 		type="text"
 		[(ngModel)]="value"
-		(ngModelChanges)="onModelChange($event)"
+		(ngModelChange)="onModelChange($event)"
 		[disabled]="disabled"
 		(focus)="onFocus()"
 		(blur)="onBlur()"
