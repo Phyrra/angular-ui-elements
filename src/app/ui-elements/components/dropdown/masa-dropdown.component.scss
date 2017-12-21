@@ -176,10 +176,6 @@ $label-offset: $label-font-size + $default-padding;
 
 			.dropdown-search {
 				padding: $default-padding;
-
-				input {
-					@include input();
-				}
 			}
 
 			.dropdown-option-list {

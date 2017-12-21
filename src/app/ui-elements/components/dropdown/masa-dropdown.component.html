@@ -27,10 +27,11 @@
 
 	<div class="dropdown-foldout" *ngIf="isOpen">
 		<div *ngIf="showSearch" class="dropdown-search">
-			<input
+			<masa-input
 				[(ngModel)]="searchTerm"
 				(ngModelChange)="onChangeSearch()"
-			/>
+				(focus)="onFocusSearch()"
+			></masa-input>
 		</div>
 
 		<div class="dropdown-option-list">

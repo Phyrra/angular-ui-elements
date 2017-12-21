@@ -136,12 +136,16 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 					break;
 				case KEY_CODE.UP_ARROW:
 					this.onNavigateSelection(-1);
+
 					this.onSelect(this.selectedItem);
+					this.onFocus();
 
 					break;
 				case KEY_CODE.DOWN_ARROW:
 					this.onNavigateSelection(1);
+
 					this.onSelect(this.selectedItem);
+					this.onFocus();
 
 					break;
 			}
@@ -195,6 +199,8 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 */
 	onClose(): void {
 		this.isOpen = false;
+
+		this.onBlur();
 	}
 
 	/**
@@ -285,7 +291,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	/**
 	 * Handles the focus event.
 	 */
-	onFocus(): void {
+	onFocus(emit: boolean = false): void {
 		this.hasFocus = true;
 
 		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
@@ -294,10 +300,14 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	/**
 	 * Handles the blur event.
 	 */
-	onBlur(): void {
+	onBlur(emit: boolean = false): void {
 		this.hasFocus = false;
 
 		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
+	}
+
+	onFocusSearch(): void {
+		this.hasFocus = true;
 	}
 
 	private filterItems(items: any[]): any[] {
