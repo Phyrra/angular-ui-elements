@@ -105,7 +105,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			return;
 		}
 
-		if ($event.which !== KEY_CODE.TAB) {
+		if ([KEY_CODE.DOWN_ARROW, KEY_CODE.UP_ARROW].includes($event.which)) {
 			$event.preventDefault();
 		}
 
@@ -116,6 +116,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 					break;
 				case KEY_CODE.ENTER:
+				case KEY_CODE.TAB:
 					this.onSelect(this.selectedItem);
 
 					break;
@@ -185,6 +186,8 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		}
 
 		this.isOpen = !this.isOpen;
+
+		this.focusSearch();
 	}
 
 	/**
@@ -192,6 +195,16 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 */
 	onOpen(): void {
 		this.isOpen = true;
+
+		this.focusSearch();
+	}
+
+	private focusSearch(): void {
+		if (this.showSearch && this.isOpen) {
+			setTimeout(() => {
+				this.elementRef.nativeElement.querySelector('masa-input input').focus();
+			});
+		}
 	}
 
 	/**
@@ -264,6 +277,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * but may reset the currently highlighted index.
 	 */
 	onChangeSearch(): void {
+		console.log('hier', this.searchTerm);
 		if (!this.searchTerm) {
 			this.filteredData = this.data;
 
@@ -306,6 +320,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
 	}
 
+	/**
+	 * Handles the focus event on the internal search.
+	 */
 	onFocusSearch(): void {
 		this.hasFocus = true;
 	}

@@ -4,7 +4,7 @@
 
 <div
 	class="dropdown-wrapper"
-	tabindex="0"
+	[tabindex]="disabled ? -1 : 0"
 	(keydown)="onWrapperKeydown($event)"
 	(focus)="onFocus()"
 	(blur)="onBlur()"

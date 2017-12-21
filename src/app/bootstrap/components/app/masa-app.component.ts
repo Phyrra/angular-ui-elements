@@ -10,6 +10,9 @@ import 'rxjs/add/operator/delay';
 	styleUrls: ['./masa-app.component.scss']
 })
 export class MasaAppComponent implements OnInit {
+	value1: string;
+	value2: string;
+
 	item1: any;
 	item2: any;
 	item3: any;
