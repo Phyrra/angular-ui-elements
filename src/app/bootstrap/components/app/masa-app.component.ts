@@ -136,6 +136,16 @@ export class MasaAppComponent implements OnInit, AfterViewInit {
 
 				return null;
 			});
+
+			this.form.form.get('value1').setValidators((control: AbstractControl) => {
+				if (control.value) {
+					return {
+						mustBeEmpty: 'Dropdown must be empty'
+					};
+				}
+
+				return null;
+			});
 		});
 	}
 

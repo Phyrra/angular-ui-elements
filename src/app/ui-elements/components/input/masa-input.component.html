@@ -12,3 +12,7 @@
 		(blur)="onBlur()"
 	/>
 </div>
+
+<div class="input-error" *ngIf="errorTemplate">
+	<ng-template [ngTemplateOutlet]="errorTemplate"></ng-template>
+</div>

@@ -4,7 +4,25 @@
 $label-offset: $label-font-size + $default-padding;
 
 :host {
+	display: block;
 	position: relative;
+
+	padding-bottom: $default-padding * 0.5 + $label-font-size;
+
+	&.ng-invalid.ng-touched {
+		.input-wrapper {
+			border-bottom-color: $error-color;
+
+			&::after {
+				background-color: $error-color;
+			}
+		}
+
+		.input-label,
+		input {
+			color: $error-color ! important;
+		}
+	}
 
 	&.disabled {
 		.input-label {
@@ -107,5 +125,13 @@ $label-offset: $label-font-size + $default-padding;
 			position: absolute;
 			bottom: -$element-border-size;
 		}
+	}
+
+	.input-error {
+		position: absolute;
+		margin-top: $default-margin * 0.5;
+
+		color: $error-color;
+		font-size: $label-font-size;
 	}
 }

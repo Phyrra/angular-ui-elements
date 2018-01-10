@@ -3,7 +3,13 @@
 
 	<h3>Normal Input</h3>
 
-	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.."></masa-input>
+	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type..">
+		<ng-template #error>
+			<div *ngIf="form.form.get('value1')?.hasError('mustBeEmpty')">
+				{{ form.form.get('value1')?.getError('mustBeEmpty') }}
+			</div>
+		</ng-template>
+	</masa-input>
 
 	<h3>Disabled</h3>
 

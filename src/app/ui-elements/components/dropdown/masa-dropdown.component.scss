@@ -4,6 +4,7 @@
 $label-offset: $label-font-size + $default-padding;
 
 :host {
+	display: block;
 	position: relative;
 
 	padding-bottom: $default-padding * 0.5 + $label-font-size;

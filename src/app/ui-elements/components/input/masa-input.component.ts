@@ -4,6 +4,7 @@ import { Input } from '@angular/core';
 import { HostBinding } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forwardRef } from '@angular/core';
+import { ContentChild, TemplateRef } from '@angular/core';
 
 const INPUT_VALUE_ACCESSOR = {
 	name: 'masaInputValueAccessor',
@@ -26,6 +27,8 @@ export class MasaInputComponent implements ControlValueAccessor {
 	@HostBinding('class.disabled') @Input() disabled: boolean;
 
 	@HostBinding('class.focus') hasFocus: boolean;
+
+	@ContentChild('error', { read: TemplateRef }) errorTemplate: TemplateRef<any>;
 
 	private onTouch: Function;
 	private onModelChange: Function;

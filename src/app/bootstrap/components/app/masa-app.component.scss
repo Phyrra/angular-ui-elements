@@ -5,8 +5,6 @@
 	padding: $default-padding;
 
 	masa-dropdown {
-		display: block;
-
 		&:not(:first-child) {
 			margin-top: $default-margin;
 		}
