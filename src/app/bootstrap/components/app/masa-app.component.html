@@ -1,86 +1,95 @@
-<h2>Input</h2>
+<form #form="ngForm">
+	<h2>Input</h2>
 
-<h3>Normal Input</h3>
+	<h3>Normal Input</h3>
 
-<masa-input [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.."></masa-input>
+	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.."></masa-input>
 
-<h3>Disabled</h3>
+	<h3>Disabled</h3>
 
-<masa-input [(ngModel)]="value2" (ngModelChange)="onValueSelected($event)" label="Type.." [disabled]="true"></masa-input>
+	<masa-input name="value2" [(ngModel)]="value2" (ngModelChange)="onValueSelected($event)" label="Type.." [disabled]="true"></masa-input>
 
-<h2>Dropdown</h2>
+	<h2>Dropdown</h2>
 
-<h3>Normal Dropdown</h3>
+	<h3>Normal Dropdown</h3>
 
-<masa-dropdown [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label">
-	<ng-template #option let-item="item">
-		{{ item.name }} ({{ item.id }})
-	</ng-template>
-</masa-dropdown>
+	<masa-dropdown name="item1" [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label">
+		<ng-template #option let-item="item">
+			{{ item.name }} ({{ item.id }})
+		</ng-template>
 
-<h3>Grouped</h3>
+		<ng-template #error>
+			<div *ngIf="form.form.get('item1')?.hasError('mustBeEmpty')">
+				{{ form.form.get('item1')?.getError('mustBeEmpty') }}
+			</div>
+		</ng-template>
+	</masa-dropdown>
 
-<masa-dropdown [data]="someGroupedData" [(ngModel)]="item2" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
-	<ng-template #option let-item="item">
-		{{ item.name }} ({{ item.id }})
-	</ng-template>
-</masa-dropdown>
+	<h3>Grouped</h3>
 
-<h3>Async Data</h3>
+	<masa-dropdown name="item2" [data]="someGroupedData" [(ngModel)]="item2" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
+		<ng-template #option let-item="item">
+			{{ item.name }} ({{ item.id }})
+		</ng-template>
+	</masa-dropdown>
 
-<masa-dropdown [data]="someAsyncData" [(ngModel)]="item3" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
-	<ng-template #option let-item="item">
-		{{ item.name }} ({{ item.id }})
-	</ng-template>
-</masa-dropdown>
+	<h3>Async Data</h3>
 
-<h3>Rendering Templates</h3>
+	<masa-dropdown name="item3" [data]="someAsyncData" [(ngModel)]="item3" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --">
+		<ng-template #option let-item="item">
+			{{ item.name }} ({{ item.id }})
+		</ng-template>
+	</masa-dropdown>
 
-<masa-dropdown [data]="someComplexData" [(ngModel)]="item4" (ngModelChange)="onValueSelected($event)" [search]="['accountName', 'accountNumber']" label="-- choose --">
-	<ng-template #display let-account="item">
-		<div class="account-description">
-			{{ account.accountName }}, {{ account.accountOwner }}
-		</div>
-		<div class="account-info">
-			<div>{{ account.accountNumber }}</div>
-			<div>{{ account.saldo | number }} CHF</div>
-		</div>
-	</ng-template>
+	<h3>Rendering Templates</h3>
 
-	<ng-template #option let-item="item">
-		<div class="number">{{ item.accountNumber }}</div>
-		<div class="name">{{ item.accountName }}</div>
-		<div class="saldo">{{ item.saldo | number }} CHF</div>
-	</ng-template>
-</masa-dropdown>
+	<masa-dropdown name="item4" [data]="someComplexData" [(ngModel)]="item4" (ngModelChange)="onValueSelected($event)" [search]="['accountName', 'accountNumber']" label="-- choose --">
+		<ng-template #display let-account="item">
+			<div class="account-description">
+				{{ account.accountName }}, {{ account.accountOwner }}
+			</div>
+			<div class="account-info">
+				<div>{{ account.accountNumber }}</div>
+				<div>{{ account.saldo | number }} CHF</div>
+			</div>
+		</ng-template>
 
-<h3>Disabled</h3>
+		<ng-template #option let-item="item">
+			<div class="number">{{ item.accountNumber }}</div>
+			<div class="name">{{ item.accountName }}</div>
+			<div class="saldo">{{ item.saldo | number }} CHF</div>
+		</ng-template>
+	</masa-dropdown>
 
-<masa-dropdown [data]="someData" [(ngModel)]="item5" (ngModelChange)="onValueSelected($event)" label="-- choose --" [disabled]="true">
-	<ng-template #option let-item="item">
-		{{ item.name }}
-	</ng-template>
-</masa-dropdown>
+	<h3>Disabled</h3>
 
-<h2>Auto Complete</h2>
+	<masa-dropdown name="item5" [data]="someData" [(ngModel)]="item5" (ngModelChange)="onValueSelected($event)" label="-- choose --" [disabled]="true">
+		<ng-template #option let-item="item">
+			{{ item.name }}
+		</ng-template>
+	</masa-dropdown>
 
-<h3>With async source</h3>
+	<h2>Auto Complete</h2>
 
-<masa-auto-complete
-	[(ngModel)]="item6"
-	(ngModelChange)="onValueSelected($event)"
-	[source]="autocompleteSource"
-	[itemRenderer]="userToString"
-	[minSearchLength]="2"
-	[maxItems]="3"
->
-	<ng-template #option let-user="item">
-		{{ user.name }} ({{ user.abbreviation }})
-	</ng-template>
+	<h3>With async source</h3>
 
-	<ng-template #overflow let-number="number">
-		<div class="overflow-warning">
-			There are {{ number }} items, only the first 3 are shown
-		</div>
-	</ng-template>
-</masa-auto-complete>
+	<masa-auto-complete
+		name="item6"
+		[(ngModel)]="item6"
+		(ngModelChange)="onValueSelected($event)"
+		[source]="autocompleteSource"
+		[itemRenderer]="userToString"
+		[minSearchLength]="2"
+		[maxItems]="3"
+	>
+		<ng-template #option let-user="item">
+			{{ user.name }} ({{ user.abbreviation }})
+		</ng-template>
+
+		<ng-template #overflow let-number="number">
+			<div class="overflow-warning">
+				There are {{ number }} items, only the first 3 are shown
+			</div>
+		</ng-template>
+	</masa-auto-complete>
+</form>

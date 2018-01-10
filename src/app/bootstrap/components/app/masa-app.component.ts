@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -9,7 +10,9 @@ import 'rxjs/add/operator/delay';
 	templateUrl: './masa-app.component.html',
 	styleUrls: ['./masa-app.component.scss']
 })
-export class MasaAppComponent implements OnInit {
+export class MasaAppComponent implements OnInit, AfterViewInit {
+	@ViewChild('form') form: HTMLFormElement;
+
 	value1: string;
 	value2: string;
 
@@ -120,6 +123,20 @@ export class MasaAppComponent implements OnInit {
 			}]
 		)
 		.subscribe(data => this.someAsyncData = data);
+	}
+
+	ngAfterViewInit(): void {
+		setTimeout(() => {
+			this.form.form.get('item1').setValidators((control: AbstractControl) => {
+				if (control.value) {
+					return {
+						mustBeEmpty: 'Dropdown must be empty'
+					};
+				}
+
+				return null;
+			});
+		});
 	}
 
 	onValueSelected(item: any): void {

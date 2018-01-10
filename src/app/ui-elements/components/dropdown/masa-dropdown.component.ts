@@ -278,7 +278,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * but may reset the currently highlighted index.
 	 */
 	onChangeSearch(): void {
-		console.log('hier', this.searchTerm);
 		if (!this.searchTerm) {
 			this.filteredData = this.data;
 
