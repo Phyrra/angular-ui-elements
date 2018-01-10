@@ -6,6 +6,27 @@ $label-offset: $label-font-size + $default-padding;
 :host {
 	position: relative;
 
+	padding-bottom: $default-padding * 0.5 + $label-font-size;
+
+	&.ng-invalid.ng-touched {
+		.dropdown-wrapper::after {
+			background-color: $error-color;
+		}
+
+		.dropdown-wrapper {
+			border-bottom-color: $error-color;
+		}
+
+		.dropdown-arrow .arrow-down {
+			border-top-color: $error-color ! important;
+		}
+
+		.dropdown-display,
+		.dropdown-label {
+			color: $error-color ! important;
+		}
+	}
+
 	&.disabled {
 		.dropdown-label {
 			color: $input-disabled;
@@ -209,5 +230,13 @@ $label-offset: $label-font-size + $default-padding;
 				}
 			}
 		}
+	}
+
+	.dropdown-error {
+		position: absolute;
+		margin-top: $default-margin * 0.5;
+
+		color: $error-color;
+		font-size: $label-font-size;
 	}
 }

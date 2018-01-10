@@ -22,7 +22,7 @@
       <div *ngIf="maxItems && overflow && items.length >= maxItems">
         <ng-template
             [ngOutletContext]="{ number: items.length }"
-            [ngTemplateOutlet]="overflow"
+            [ngTemplateOutlet]="overflowTemplate"
         ></ng-template>
       </div>
 
@@ -38,7 +38,7 @@
         >
           <ng-template
               [ngOutletContext]="{ item: item }"
-              [ngTemplateOutlet]="option"
+              [ngTemplateOutlet]="optionTemplate"
           ></ng-template>
         </div>
       </div>

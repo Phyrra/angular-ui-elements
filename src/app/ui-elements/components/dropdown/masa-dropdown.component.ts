@@ -6,9 +6,9 @@ import { HostBinding } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forwardRef } from '@angular/core';
 import { KEY_CODE } from '../../constants';
+import { scrollToElement } from '../../helpers';
 
 import * as _ from 'lodash';
-import { scrollToElement } from '../../helpers';
 
 const DROPDOWN_VALUE_ACCESSOR = {
 	name: 'masaDropdownValueAccessor',
@@ -32,8 +32,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@Input() noSearch: number = 0;
 	@HostBinding('class.disabled') @Input() disabled: boolean;
 
-	@ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
-	@ContentChild('display', { read: TemplateRef }) display: TemplateRef<any>;
+	@ContentChild('option', { read: TemplateRef }) optionTemplate: TemplateRef<any>;
+	@ContentChild('display', { read: TemplateRef }) displayTemplate: TemplateRef<any>;
+	@ContentChild('error', { read: TemplateRef }) errorTemplate: TemplateRef<any>;
 
 	private onTouch: Function;
 	private onModelChange: Function;

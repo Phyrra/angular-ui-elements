@@ -37,15 +37,15 @@ const AUTO_COMPLETE_VALUE_ACCESSOR = {
 export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	@Input() loadingText: string;
 	@Input() noItemsText: string;
-	
+
 	@Input() disabled: boolean;
 
-	@ContentChild('option', { read: TemplateRef }) option: TemplateRef<any>;
+	@ContentChild(TemplateRef) optionTemplate: TemplateRef<any>;
 	@Input() itemRenderer: (item: any) => string;
 
 	@Input() minSearchLength;
 
-	@ContentChild('overflow', { read: TemplateRef }) overflow: TemplateRef<any>;
+	@ContentChild('overflow', { read: TemplateRef }) overflowTemplate: TemplateRef<any>;
 	@Input() maxItems: number;
 
 	private onTouch: Function;
@@ -74,7 +74,7 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 				if (action.immediate) {
 					return Observable.timer(0);
 				}
-	
+
 				return Observable.timer(300);
 			})
 			.subscribe((action: Action) => {
@@ -96,10 +96,10 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 					if (this.isLoading) {
 						this.apiSubscription.unsubscribe();
 					}
-	
+
 					this.loadList();
 				}
-	
+
 				this.actions.next(action);
 			});
 	}
@@ -195,7 +195,7 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 		if (this.minSearchLength > 0 && this.search.length < this.minSearchLength) {
 			this.items = [];
 			this.isOpen = false;
-			
+
 			return;
 		}
 
@@ -208,11 +208,11 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 			.subscribe(([results, action]) => {
 				this.items = results;
 				this.selectedIndex = 0;
-	
+
 				if (action.immediate) {
 					action.action();
 				}
-	
+
 				this.apiSubscription = null;
 			});
 	}
