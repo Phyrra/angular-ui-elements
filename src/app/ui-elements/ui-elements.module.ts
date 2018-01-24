@@ -6,12 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { MasaDropdownComponent } from './components/dropdown/masa-dropdown.component';
 import { MasaAutoCompleteComponent } from './components/auto-complete/masa-auto-complete.component';
 import { MasaInputComponent } from './components/input/masa-input.component';
+import { MasaErrorComponent } from './components/error/masa-error.component';
 
 @NgModule({
 	declarations: [
 		MasaDropdownComponent,
 		MasaAutoCompleteComponent,
-		MasaInputComponent
+		MasaInputComponent,
+		MasaErrorComponent
 	],
 	imports: [
 		CommonModule,
@@ -22,7 +24,8 @@ import { MasaInputComponent } from './components/input/masa-input.component';
 	exports: [
 		MasaDropdownComponent,
 		MasaAutoCompleteComponent,
-		MasaInputComponent
+		MasaInputComponent,
+		MasaErrorComponent
 	]
 })
 export class MasaUiElementsModule { }

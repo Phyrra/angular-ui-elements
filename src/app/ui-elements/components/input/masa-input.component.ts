@@ -29,8 +29,6 @@ export class MasaInputComponent implements ControlValueAccessor {
 
 	@HostBinding('class.focus') hasFocus: boolean;
 
-	@ContentChild('error', { read: TemplateRef }) errorTemplate: TemplateRef<any>;
-
 	private onTouch: Function;
 	private onModelChange: Function;
 

@@ -4,11 +4,9 @@
 	<h3>Normal Input</h3>
 
 	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.." [required]="true">
-		<ng-template #error>
-			<div *ngIf="form.form.get('value1')?.hasError('required')">
-				Required
-			</div>
-		</ng-template>
+		<masa-error *ngIf="form.form.get('value1')?.hasError('required')">
+			Required
+		</masa-error>
 	</masa-input>
 
 	<h3>Disabled</h3>
@@ -24,11 +22,9 @@
 			{{ item.name }} ({{ item.id }})
 		</ng-template>
 
-		<ng-template #error>
-			<div *ngIf="form.form.get('item1')?.hasError('required')">
-				Required
-			</div>
-		</ng-template>
+		<masa-error *ngIf="form.form.get('item1')?.hasError('required')">
+			Required
+		</masa-error>
 	</masa-dropdown>
 
 	<h3>Grouped</h3>

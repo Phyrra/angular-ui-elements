@@ -68,6 +68,6 @@
 	</div>
 </div>
 
-<div class="dropdown-error" *ngIf="touched && errorTemplate">
-	<ng-template [ngTemplateOutlet]="errorTemplate"></ng-template>
+<div class="dropdown-error" *ngIf="touched">
+	<ng-content select="masa-error"></ng-content>
 </div>

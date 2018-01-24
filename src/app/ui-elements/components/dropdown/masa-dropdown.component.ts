@@ -35,7 +35,6 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 	@ContentChild('option', { read: TemplateRef }) optionTemplate: TemplateRef<any>;
 	@ContentChild('display', { read: TemplateRef }) displayTemplate: TemplateRef<any>;
-	@ContentChild('error', { read: TemplateRef }) errorTemplate: TemplateRef<any>;
 
 	private onTouch: Function;
 	private onModelChange: Function;
