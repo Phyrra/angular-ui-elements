@@ -3,10 +3,10 @@
 
 	<h3>Normal Input</h3>
 
-	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type..">
+	<masa-input name="value1" [(ngModel)]="value1" (ngModelChange)="onValueSelected($event)" label="Type.." [required]="true">
 		<ng-template #error>
-			<div *ngIf="form.form.get('value1')?.hasError('mustBeEmpty')">
-				{{ form.form.get('value1')?.getError('mustBeEmpty') }}
+			<div *ngIf="form.form.get('value1')?.hasError('required')">
+				Required
 			</div>
 		</ng-template>
 	</masa-input>
@@ -19,14 +19,14 @@
 
 	<h3>Normal Dropdown</h3>
 
-	<masa-dropdown name="item1" [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label">
+	<masa-dropdown name="item1" [data]="someData" [(ngModel)]="item1" (ngModelChange)="onValueSelected($event)" [search]="['name']" label="-- choose --" label="Label" [required]="true">
 		<ng-template #option let-item="item">
 			{{ item.name }} ({{ item.id }})
 		</ng-template>
 
 		<ng-template #error>
-			<div *ngIf="form.form.get('item1')?.hasError('mustBeEmpty')">
-				{{ form.form.get('item1')?.getError('mustBeEmpty') }}
+			<div *ngIf="form.form.get('item1')?.hasError('required')">
+				Required
 			</div>
 		</ng-template>
 	</masa-dropdown>

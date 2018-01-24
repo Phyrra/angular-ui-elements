@@ -58,6 +58,13 @@ $label-offset: $label-font-size + $default-padding;
 			font-size: $label-font-size;
 			top: 0;
 			color: $active-color;
+
+			.required {
+				transition: $focus-transition;
+				transition-property: color;
+
+				color: $error-color;
+			}
 		}
 
 		.dropdown-wrapper {

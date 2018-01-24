@@ -1,5 +1,6 @@
 <div *ngIf="label" [ngClass]="{ 'input-label': true, 'no-value': !value }">
 	{{ label }}
+	<span class="required" *ngIf="required">*</span>
 </div>
 
 <div class="input-wrapper">
@@ -13,6 +14,6 @@
 	/>
 </div>
 
-<div class="input-error" *ngIf="errorTemplate">
+<div class="input-error" *ngIf="touched && errorTemplate">
 	<ng-template [ngTemplateOutlet]="errorTemplate"></ng-template>
 </div>

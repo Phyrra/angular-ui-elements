@@ -25,6 +25,7 @@ export class MasaInputComponent implements ControlValueAccessor {
 	@Input() value: string;
 	@Input() label: string;
 	@HostBinding('class.disabled') @Input() disabled: boolean;
+	@Input() required: boolean;
 
 	@HostBinding('class.focus') hasFocus: boolean;
 
@@ -32,6 +33,8 @@ export class MasaInputComponent implements ControlValueAccessor {
 
 	private onTouch: Function;
 	private onModelChange: Function;
+
+	touched: boolean = false;
 
 	/**
 	 * Constructor of the Component
@@ -68,14 +71,6 @@ export class MasaInputComponent implements ControlValueAccessor {
 	 */
 	writeValue(val: string): void {
 		this.value = val;
-
-		if (this.onTouch) {
-			this.onTouch();
-		}
-
-		if (this.onModelChange) {
-			this.onModelChange(val);
-		}
 	}
 
 	onFocus(): void {
@@ -87,6 +82,11 @@ export class MasaInputComponent implements ControlValueAccessor {
 	onBlur(): void {
 		this.hasFocus = false;
 
-		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
+		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
+
+		this.touched = true;
+		if (this.onTouch) {
+			this.onTouch();
+		}
 	}
 }

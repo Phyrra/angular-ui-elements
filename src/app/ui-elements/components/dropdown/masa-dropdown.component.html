@@ -1,5 +1,6 @@
 <div [ngClass]="{ 'dropdown-label': true, 'no-value': !selectedItem }">
-	{{ label }}&nbsp;
+	{{ label }}
+	<span class="required" *ngIf="required">*</span>
 </div>
 
 <div
@@ -31,6 +32,7 @@
 				[(ngModel)]="searchTerm"
 				(ngModelChange)="onChangeSearch()"
 				(focus)="onFocusSearch()"
+				(blur)="onBlurSearch()"
 			></masa-input>
 		</div>
 
@@ -66,6 +68,6 @@
 	</div>
 </div>
 
-<div class="dropdown-error" *ngIf="errorTemplate">
+<div class="dropdown-error" *ngIf="touched && errorTemplate">
 	<ng-template [ngTemplateOutlet]="errorTemplate"></ng-template>
 </div>

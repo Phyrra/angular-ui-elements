@@ -31,6 +31,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@Input() search: string[];
 	@Input() noSearch: number = 0;
 	@HostBinding('class.disabled') @Input() disabled: boolean;
+	@Input() required: boolean;
 
 	@ContentChild('option', { read: TemplateRef }) optionTemplate: TemplateRef<any>;
 	@ContentChild('display', { read: TemplateRef }) displayTemplate: TemplateRef<any>;
@@ -39,8 +40,11 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	private onTouch: Function;
 	private onModelChange: Function;
 
+	touched: boolean;
+
 	@HostBinding('class.open') isOpen: boolean = false;
 	@HostBinding('class.focus') hasFocus: boolean = false;
+	private searchHasFocus: boolean;
 
 	selectedItem: any;
 	searchTerm: string;
@@ -90,7 +94,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			const realItem = this.getAllItems(this.data)
 				.find(elem => elem.id === id);
 
-			this.onSelect(realItem);
+			this.selectedItem = realItem;
 		}
 	}
 
@@ -140,14 +144,12 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 					this.onNavigateSelection(-1);
 
 					this.onSelect(this.selectedItem);
-					this.onFocus();
 
 					break;
 				case KEY_CODE.DOWN_ARROW:
 					this.onNavigateSelection(1);
 
 					this.onSelect(this.selectedItem);
-					this.onFocus();
 
 					break;
 			}
@@ -163,8 +165,18 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	@HostListener('document:click', ['$event.target']) onOutsideClick(targetElement: any): void {
 		const clickInside = this.elementRef.nativeElement.contains(targetElement);
 
-		if (!clickInside) {
-			this.onClose();
+		if (clickInside) {
+			if (!this.hasFocus) {
+				this.onFocus();
+			}
+		} else {
+			if (this.isOpen) {
+				this.onClose();
+			}
+
+			if (this.hasFocus) {
+				this.onBlur();
+			}
 		}
 	}
 
@@ -188,7 +200,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 		this.isOpen = !this.isOpen;
 
-		this.focusSearch();
+		if (this.isOpen) {
+			this.focusSearch();
+		}
 	}
 
 	/**
@@ -214,7 +228,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	onClose(): void {
 		this.isOpen = false;
 
-		this.onBlur();
+		this.elementRef.nativeElement.querySelector('.dropdown-wrapper').focus();
 	}
 
 	/**
@@ -235,7 +249,9 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			this.onModelChange(item);
 		}
 
-		this.onClose();
+		if (this.isOpen) {
+			this.onClose();
+		}
 		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
 	}
 
@@ -305,7 +321,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	/**
 	 * Handles the focus event.
 	 */
-	onFocus(emit: boolean = false): void {
+	onFocus(): void {
 		this.hasFocus = true;
 
 		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
@@ -314,17 +330,31 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	/**
 	 * Handles the blur event.
 	 */
-	onBlur(emit: boolean = false): void {
-		this.hasFocus = false;
+	onBlur(): void {
+		setTimeout(() => {
+			if (!this.searchHasFocus) {
+				this.hasFocus = false;
 
-		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
+				this.touched = true;
+				if (this.onTouch) {
+					this.onTouch();
+				}
+			}
+		});
 	}
 
 	/**
 	 * Handles the focus event on the internal search.
 	 */
 	onFocusSearch(): void {
-		this.hasFocus = true;
+		this.searchHasFocus = true;
+	}
+
+	/**
+	 * Handles the blur event on the internal search.
+	 */
+	onBlurSearch(): void {
+		this.searchHasFocus = false;
 	}
 
 	private filterItems(items: any[]): any[] {
