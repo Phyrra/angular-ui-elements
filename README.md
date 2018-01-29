@@ -1,4 +1,4 @@
-# MasaDropdown
+# UI Elements
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.3.
 
@@ -13,6 +13,34 @@ Run `yarn build` to build the project. The build artifacts will be stored in the
 ## Example
 
 A working example can be found [here](https://masa-dropdown.000webhostapp.com/).
+
+## Input
+
+### Usage
+
+```
+<masa-input label="Label"></masa-input>
+```
+
+The model can be bound like any other input with either `[(ngModel)]` and `(ngModelChange)` or using `FormGroup`.
+
+For errors the element `<sama-error>` can be used.
+
+```
+<masa-input label="Label">
+	<sama-error *ngIf="control.invalid">
+		Error message
+	</sama-error>
+</masa-input>
+```
+
+### Inputs
+
+| Input    | Description                                                                                                  | Example               |
+| ---------| ------------------------------------------------------------------------------------------------------------ | --------------------- |
+| label    | A label (string) to show while nothing is selected and as label once something is                            | `label="Label"`       |
+| disabled | A flag to disable the input                                                                                  | `[disabled]="true"`   |
+| required | A flag to mark the input as required                                                                         | `[required]="true"`   |
 
 ## Dropdown
 
@@ -57,7 +85,7 @@ const groupedData = [{
 To use the component, a template to render the items must be defined with the angular-id `#option`.
 
 ```
-<masa-dropdown [data]="someData" placeholder="-- choose --">
+<masa-dropdown [data]="someData" label="Label">
 	<ng-template #option let-item="item">
 		{{ item.name }}
 	</ng-template>
@@ -67,7 +95,7 @@ To use the component, a template to render the items must be defined with the an
 A second template for rendering the seleciton may also be defined with the angular-id `#display`. If none is set, the item template will be used.
 
 ```
-<masa-dropdown [data]="someData" placeholder="-- choose --">
+<masa-dropdown [data]="someData" label="Label">
 	<ng-template #display let-selection="item">
 		<div>
 			{{ selection.name }}
@@ -85,15 +113,30 @@ A second template for rendering the seleciton may also be defined with the angul
 
 The model can be bound like any other input with either `[(ngModel)]` and `(ngModelChange)` or using `FormGroup`.
 
+For errors the element `<sama-error>` can be used.
+
+```
+<masa-dropdown [data]="someData" label="Label">
+	<ng-template #option let-item="item">
+		{{ item.name }}
+	</ng-template>
+	
+	<sama-error *ngIf="control.invalid">
+		Error message
+	</sama-error>
+</masa-dropdown>
+```
+
 ### Inputs
 
-| Input       | Description                                                                                                  | Example                      |
-| ----------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------- |
-| data        | The data                                                                                                     | `[data]="someData`           |
-| placeholder | A placeholder (string) to show while nothing is selected                                                     | `placeholder="-- choose --"` |
-| search      | An array of fields that may be searched. If none is provided, the search will not be available               | `[search]="['name']"`        |
-| noSearch    | A numeric limit from which the search will be shown. Only shows search if there are more than 10 items       | `[noSearch]="10"`            |
-| disabled    | A flag to disable the input                                                                                  | `[disabled]="true"`          |
+| Input    | Description                                                                                                  | Example               |
+| ---------| ------------------------------------------------------------------------------------------------------------ | --------------------- |
+| data     | The data                                                                                                     | `[data]="someData`    |
+| label    | A label (string) to show while nothing is selected and as label once something is                            | `label="Label"`       |
+| search   | An array of fields that may be searched. If none is provided, the search will not be available               | `[search]="['name']"` |
+| noSearch | A numeric limit from which the search will be shown. Only shows search if there are more than 10 items       | `[noSearch]="10"`     |
+| disabled | A flag to disable the input                                                                                  | `[disabled]="true"`   |
+| required | A flag to mark the input as required                                                                         | `[required]="true"`   |
 
 ## Auto complete
 

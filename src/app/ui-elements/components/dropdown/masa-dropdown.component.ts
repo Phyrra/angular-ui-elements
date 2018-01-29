@@ -78,7 +78,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	}
 
 	/**
-	 * Writes the interal value when the model is changed from the outside
+	 * Writes the internal value when the model is changed from the outside
 	 *
 	 * @param {any} item - the item to be selected
 	 */
@@ -86,11 +86,16 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		const id: any = (item || {}).id;
 
 		if (!this.selectedItem || this.selectedItem.id !== id) {
-			const realItem = this.getAllItems(this.data)
+			this.selectedItem = this.getAllItems(this.data)
 				.find(elem => elem.id === id);
-
-			this.selectedItem = realItem;
 		}
+	}
+
+  /**
+	 * Focus the element
+   */
+	focus(): void {
+		focusElement(this.elementRef, '.dropdown-wrapper');
 	}
 
 	/**
@@ -223,11 +228,11 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	onClose(): void {
 		this.isOpen = false;
 
-		focusElement(this.elementRef, '.dropdown-wrapper');
+		this.focus();
 	}
 
 	/**
-	 * Handles the seleciton of an item.
+	 * Handles the selection of an item.
 	 * This expects the item to be an "internal" item (i.e. already indexed).
 	 * Emits the touch and change events.
 	 *
@@ -315,7 +320,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	}
 
 	/**
-	 * Handles the focus event.
+	 * Handles the focus event
 	 */
 	onFocus(): void {
 		if (!this.hasFocus && !this.searchHasFocus) {
@@ -326,7 +331,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	}
 
 	/**
-	 * Handles the blur event.
+	 * Handles the blur event
 	 */
 	onBlur(): void {
 		setTimeout(() => {
@@ -344,14 +349,14 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	}
 
 	/**
-	 * Handles the focus event on the internal search.
+	 * Handles the focus event on the internal search
 	 */
 	onFocusSearch(): void {
 		this.searchHasFocus = true;
 	}
 
 	/**
-	 * Handles the blur event on the internal search.
+	 * Handles the blur event on the internal search
 	 */
 	onBlurSearch(): void {
 		this.searchHasFocus = false;

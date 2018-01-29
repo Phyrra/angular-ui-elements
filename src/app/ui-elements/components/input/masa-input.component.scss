@@ -119,6 +119,7 @@ $label-offset: $label-font-size + $default-padding;
 			width: 100%;
 			border: none;
 			background-color: transparent;
+			font-size: inherit;
 
 			padding: $default-padding 0;
 		}

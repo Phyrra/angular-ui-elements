@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
-import { ElementRef } from '@angular/core';
-import { Input } from '@angular/core';
-import { HostBinding } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostBinding, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { forwardRef } from '@angular/core';
-import { ContentChild, TemplateRef } from '@angular/core';
+import { emitEvent, focusElement } from '../../helpers';
 
 const INPUT_VALUE_ACCESSOR = {
 	name: 'masaInputValueAccessor',
@@ -22,12 +18,13 @@ const INPUT_VALUE_ACCESSOR = {
 	]
 })
 export class MasaInputComponent implements ControlValueAccessor {
-	@Input() value: string;
 	@Input() label: string;
 	@HostBinding('class.disabled') @Input() disabled: boolean;
 	@Input() required: boolean;
 
 	@HostBinding('class.focus') hasFocus: boolean;
+
+  value: string;
 
 	private onTouch: Function;
 	private onModelChange: Function;
@@ -63,28 +60,57 @@ export class MasaInputComponent implements ControlValueAccessor {
 	}
 
 	/**
-	 * Writes the interal value when the model is changed from the outside
+	 * Writes the internal value when the model is changed from the outside
 	 *
-	 * @param {any} item - the item to be selected
+	 * @param {string} val - the value to set
 	 */
 	writeValue(val: string): void {
 		this.value = val;
 	}
 
+  /**
+	 * Focus the element
+   */
+	focus(): void {
+		focusElement(this.elementRef, 'input');
+	}
+
+  /**
+   * Handles the focus event
+   */
 	onFocus(): void {
 		this.hasFocus = true;
 
-		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
+		emitEvent(this.elementRef, 'focus');
 	}
 
+  /**
+   * Handles the blur event
+   */
 	onBlur(): void {
 		this.hasFocus = false;
-
-		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
 
 		this.touched = true;
 		if (this.onTouch) {
 			this.onTouch();
 		}
+
+		emitEvent(this.elementRef, 'blur');
+	}
+
+  /**
+	 * Handles changes of the model.
+	 * Emits the touch and change events.
+   */
+	onChange(): void {
+		if (this.onTouch) {
+			this.onTouch();
+		}
+
+		if (this.onModelChange) {
+			this.onModelChange(this.value);
+		}
+
+		emitEvent(this.elementRef, 'change');
 	}
 }
