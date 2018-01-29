@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HostListener, ElementRef } from '@angular/core';
-import { Input } from '@angular/core';
-import { ContentChild, TemplateRef } from '@angular/core';
-import { HostBinding } from '@angular/core';
+import { Component, ContentChild, ElementRef, forwardRef, HostBinding, HostListener, Input, OnInit, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { forwardRef } from '@angular/core';
+
 import { KEY_CODE } from '../../constants';
-import { scrollToElement } from '../../helpers';
+import { emitEvent, focusElement, scrollToElement } from '../../helpers';
 
 import * as _ from 'lodash';
 
@@ -216,7 +212,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	private focusSearch(): void {
 		if (this.showSearch && this.isOpen) {
 			setTimeout(() => {
-				this.elementRef.nativeElement.querySelector('masa-input input').focus();
+				focusElement(this.elementRef, 'masa-input input');
 			});
 		}
 	}
@@ -227,7 +223,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	onClose(): void {
 		this.isOpen = false;
 
-		this.elementRef.nativeElement.querySelector('.dropdown-wrapper').focus();
+		focusElement(this.elementRef, '.dropdown-wrapper');
 	}
 
 	/**
@@ -251,7 +247,8 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 		if (this.isOpen) {
 			this.onClose();
 		}
-		this.elementRef.nativeElement.dispatchEvent(new Event('blur'));
+
+		emitEvent(this.elementRef, 'change');
 	}
 
 	/**
@@ -281,7 +278,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 
 		if (this.isOpen) {
 			const selectedElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option')[currentIdx];
-			const wrapperElement: HTMLElement = this.elementRef.nativeElement.getElementsByClassName('dropdown-option-list')[0];
+			const wrapperElement: HTMLElement = this.elementRef.nativeElement.querySelector('.dropdown-option-list');
 
 			scrollToElement(selectedElement, wrapperElement, direction);
 		}
@@ -321,9 +318,11 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 	 * Handles the focus event.
 	 */
 	onFocus(): void {
-		this.hasFocus = true;
+		if (!this.hasFocus && !this.searchHasFocus) {
+			emitEvent(this.elementRef, 'focus');
+		}
 
-		this.elementRef.nativeElement.dispatchEvent(new Event('focus'));
+		this.hasFocus = true;
 	}
 
 	/**
@@ -338,6 +337,8 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 				if (this.onTouch) {
 					this.onTouch();
 				}
+
+				emitEvent(this.elementRef, 'blur');
 			}
 		});
 	}

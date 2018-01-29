@@ -1,4 +1,6 @@
-export function scrollToElement(elem: HTMLElement, wrapperElement: HTMLElement, direction: number) {
+import { ElementRef } from '@angular/core';
+
+export function scrollToElement(elem: HTMLElement, wrapperElement: HTMLElement, direction: number): void {
 	const bodyElement: HTMLElement = document.body;
 
 	const wrapperRect: ClientRect = wrapperElement.getBoundingClientRect();
@@ -19,4 +21,12 @@ export function scrollToElement(elem: HTMLElement, wrapperElement: HTMLElement, 
 			wrapperElement.scrollTop -= (wrapperTop - elementTop);
 		}
 	}
+}
+
+export function emitEvent(elem: ElementRef, event: string): void {
+  elem.nativeElement.dispatchEvent(new Event(event, { bubbles: true }));
+}
+
+export function focusElement(elem: ElementRef, querySelector: string): void {
+	elem.nativeElement.querySelector(querySelector).focus();
 }
