@@ -110,7 +110,7 @@ export class MasaDropdownComponent implements OnInit, ControlValueAccessor {
 			return;
 		}
 
-		if ([KEY_CODE.DOWN_ARROW, KEY_CODE.UP_ARROW].includes($event.which)) {
+		if ([KEY_CODE.DOWN_ARROW, KEY_CODE.UP_ARROW].find(code => code === $event.which)) {
 			$event.preventDefault();
 		}
 

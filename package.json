@@ -1,11 +1,12 @@
 {
-	"name": "masa-dropdown",
+	"name": "masa-ui-elements",
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
 		"start": "ng serve",
-		"build": "ng build",
-		"lint": "ng lint --type-check"
+		"ng-build": "ng build",
+		"lint": "ng lint --type-check",
+		"build": "gulp build"
 	},
 	"private": true,
 	"dependencies": {
@@ -41,6 +42,13 @@
 		"protractor": "~5.1.2",
 		"ts-node": "~3.0.4",
 		"tslint": "~5.3.2",
-		"typescript": "~2.3.3"
+		"typescript": "~2.3.3",
+		"del": "^2.2.2",
+		"gulp": "^3.9.1",
+		"gulp-rename": "^1.2.2",
+		"gulp-rollup": "^2.15.0",
+		"run-sequence": "^1.2.2",
+		"node-sass": "^4.5.2",
+		"node-sass-tilde-importer": "^1.0.0"
 	}
 }

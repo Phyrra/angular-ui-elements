@@ -1,0 +1,30 @@
+{
+  "name": "masa-ui-elements",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Phyrra/angular-ui-elements"
+  },
+  "author": {
+    "name": "Sandro Maggi"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Phyrra/angular-ui-elements/issues"
+  },
+  "main": "masa-ui-elements.umd.js",
+  "module": "masa-ui-elements.js",
+  "jsnext:main": "masa-ui-elements.js",
+  "typings": "masa-ui-elements.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4",
+    "lodash": "^4.17.4",
+    "@types/lodash": "^4.14.71"
+  }
+}

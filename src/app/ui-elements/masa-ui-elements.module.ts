@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,4 +28,11 @@ import { MasaErrorComponent } from './components/error/masa-error.component';
 		MasaErrorComponent
 	]
 })
-export class MasaUiElementsModule { }
+export class MasaUiElementsModule {
+	static forRoot(): ModuleWithProviders {
+  	return {
+  		ngModule: MasaUiElementsModule,
+			providers: []
+  	};
+	}
+}
