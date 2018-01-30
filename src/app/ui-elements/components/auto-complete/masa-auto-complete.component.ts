@@ -1,10 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { HostListener, ElementRef, Input } from '@angular/core';
-import { ContentChild, TemplateRef } from '@angular/core';
+import { Component, ContentChild, ElementRef, forwardRef, HostListener, Input, OnInit, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { forwardRef } from '@angular/core';
-import { KEY_CODE } from '../../constants';
-import { scrollToElement } from 'app/ui-elements/helpers';
 
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -13,6 +8,9 @@ import 'rxjs/add/operator/debounce';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/timer';
+
+import { KEY_CODE } from '../../constants';
+import { scrollToElement } from 'app/ui-elements/helpers';
 
 export interface Action {
 	immediate: boolean;
@@ -39,6 +37,7 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	@Input() noItemsText: string;
 
 	@Input() disabled: boolean;
+	@Input() required: boolean;
 
 	@ContentChild(TemplateRef) optionTemplate: TemplateRef<any>;
 	@Input() itemRenderer: (item: any) => string;
@@ -156,7 +155,15 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	}
 
 	onKeyDown($event: any): void {
-		switch ($event.keyCode) {
+		if (this.disabled) {
+			return;
+		}
+
+		if ([KEY_CODE.DOWN_ARROW, KEY_CODE.UP_ARROW].includes($event.which)) {
+			$event.preventDefault();
+		}
+
+		switch ($event.which) {
 			case KEY_CODE.ENTER:
 				this.keys.next({
 					immediate: true,

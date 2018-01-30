@@ -1,12 +1,13 @@
 <div
     [ngClass]="{ 'wrapper': true, 'disabled': disabled, 'open': isOpen }"
 >
-  <input
+  <masa-input
     [(ngModel)]="search"
     (keydown)="onKeyDown($event)"
     (blur)="onBlur($event)"
     [disabled]="disabled"
-  />
+    [required]="required"
+  ></masa-input>
 
   <div class="foldout" *ngIf="isOpen">
     <div *ngIf="isLoading" class="loading">
@@ -19,26 +20,26 @@
         <div class="no-items">{{ noItemsText || 'No items found' }}</div>
       </ng-container>
 
-      <div *ngIf="maxItems && overflow && items.length >= maxItems">
+      <div *ngIf="maxItems && overflowTemplate && items.length >= maxItems">
         <ng-template
-            [ngOutletContext]="{ number: items.length }"
-            [ngTemplateOutlet]="overflowTemplate"
+          [ngOutletContext]="{ number: items.length }"
+          [ngTemplateOutlet]="overflowTemplate"
         ></ng-template>
       </div>
 
       <div
-          class="auto-complete-option-list"
-          *ngIf="items.length > 0"
+        class="auto-complete-option-list"
+        *ngIf="items.length > 0"
       >
         <div
-            *ngFor="let item of items; let i = index"
-            class="option"
-            (click)="selectItemAtIndex(i)"
-            [class.selected]="i === selectedIndex"
+          *ngFor="let item of items; let i = index"
+          class="option"
+          (click)="selectItemAtIndex(i)"
+          [class.selected]="i === selectedIndex"
         >
           <ng-template
-              [ngOutletContext]="{ item: item }"
-              [ngTemplateOutlet]="optionTemplate"
+            [ngOutletContext]="{ item: item }"
+            [ngTemplateOutlet]="optionTemplate"
           ></ng-template>
         </div>
       </div>

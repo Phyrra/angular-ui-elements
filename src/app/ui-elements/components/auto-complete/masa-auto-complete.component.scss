@@ -7,15 +7,6 @@ $elem-padding: $default-padding * 0.75;
   .wrapper {
     position: relative;
 
-    background-color: $input-background;
-    color: inherit;
-
-    &.disabled {
-      input {
-        // TODO?
-      }
-    }
-
     &.open {
       input {
         outline: none;

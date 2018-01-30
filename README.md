@@ -195,3 +195,4 @@ The model can be bound like any other input with either `[(ngModel)]` and `(ngMo
 | loadingText     | The text to be shown while the API request is pending                                                                                                       | `loadingText="Loading"`         |
 | noItemsText     | The text to be shown, when the API request did not return any results                                                                                       | `noItemsText="No items found`   |
 | disabled        | A flag to disable the input                                                                                                                                 | `[disabled]="true"`             |
+| required        | A flag to mark the input as required                                                                                                                        | `[required]="true"`             |
