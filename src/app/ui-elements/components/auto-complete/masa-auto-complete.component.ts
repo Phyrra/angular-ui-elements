@@ -10,7 +10,7 @@ import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/timer';
 
 import { KEY_CODE } from '../../constants';
-import { scrollToElement } from 'app/ui-elements/helpers';
+import { scrollToElement } from '../../helpers';
 
 export interface Action {
 	immediate: boolean;
