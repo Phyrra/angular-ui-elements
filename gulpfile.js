@@ -176,10 +176,10 @@ gulp.task('copy:manifest', function () {
 });
 
 /**
- * 9. Copy README.md from /src to /dist
+ * 9. Copy README.md from / to /dist
  */
 gulp.task('copy:readme', function () {
-  return gulp.src([path.join(rootFolder, 'src/README.MD')])
+  return gulp.src([path.join(rootFolder, 'README.MD')])
     .pipe(gulp.dest(distFolder));
 });
 
@@ -220,18 +220,11 @@ gulp.task('compile', function () {
     });
 });
 
-/**
- * Watch for any change in the /src folder and compile files
- */
-gulp.task('watch', function () {
-  gulp.watch(`${srcFolder}/**/*`, ['compile']);
-});
-
 gulp.task('clean', ['clean:dist', 'clean:tmp', 'clean:build']);
 
 gulp.task('build', ['clean', 'compile']);
-gulp.task('build:watch', ['build', 'watch']);
-gulp.task('default', ['build:watch']);
+
+gulp.task('default', ['build']);
 
 /**
  * Deletes the specified folder
