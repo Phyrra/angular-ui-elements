@@ -52,7 +52,7 @@ function inlineResources(projectPath) {
         return readFile(fullFilePath, 'utf-8')
         .then(content => {
           return content.replace(/@import "~scss\/(.*?)"/g, function(line, group) {
-            return `@import "../../${group}"`;
+            return `@import "${path.relative(path.dirname(fullFilePath), projectPath)}/${group}"`;
           });
         })
         .then(content => {
