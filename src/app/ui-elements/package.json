@@ -20,10 +20,10 @@
   "jsnext:main": "masa-ui-elements.js",
   "typings": "masa-ui-elements.d.ts",
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4",
+    "@angular/core": "^5.2.3",
+    "@angular/forms": "^5.2.3",
+    "rxjs": "^5.5.6",
+    "zone.js": "^0.8.20",
     "lodash": "^4.17.4",
     "@types/lodash": "^4.14.71"
   }

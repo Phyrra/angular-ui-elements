@@ -13,7 +13,7 @@
 	<div class="dropdown-toggle" (click)="onToggle()">
 		<div class="dropdown-display">
 			<ng-container *ngIf="selectedItem">
-				<ng-template [ngOutletContext]="{ item: selectedItem }" [ngTemplateOutlet]="displayTemplate || optionTemplate"></ng-template>
+				<ng-template [ngTemplateOutletContext]="{ item: selectedItem }" [ngTemplateOutlet]="displayTemplate || optionTemplate"></ng-template>
 			</ng-container>
 
 			<ng-container *ngIf="!selectedItem">
@@ -48,7 +48,7 @@
 						[ngClass]="{ 'dropdown-option': true, 'selected': item.id === selectedItem?.id }"
 						(click)="onSelect(item)"
 					>
-						<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="optionTemplate"></ng-template>
+						<ng-template [ngTemplateOutletContext]="{ item: item }" [ngTemplateOutlet]="optionTemplate"></ng-template>
 						&nbsp;
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 					[ngClass]="{ 'dropdown-option': true, 'selected': item.id === selectedItem?.id }"
 					(click)="onSelect(item)"
 				>
-					<ng-template [ngOutletContext]="{ item: item }" [ngTemplateOutlet]="optionTemplate"></ng-template>
+					<ng-template [ngTemplateOutletContext]="{ item: item }" [ngTemplateOutlet]="optionTemplate"></ng-template>
 					&nbsp;
 				</div>
 			</ng-container>
