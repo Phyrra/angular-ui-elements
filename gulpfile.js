@@ -176,10 +176,10 @@ gulp.task('copy:manifest', function () {
 });
 
 /**
- * 9. Copy README.md from / to /dist
+ * 9. Copy README.md and LICENSE.md from / to /dist
  */
-gulp.task('copy:readme', function () {
-  return gulp.src([path.join(rootFolder, 'README.MD')])
+gulp.task('copy:info', function () {
+  return gulp.src([path.join(rootFolder, 'README.md'), path.join(rootFolder, 'LICENSE.md')])
     .pipe(gulp.dest(distFolder));
 });
 
@@ -207,7 +207,7 @@ gulp.task('compile', function () {
     'rollup:umd',
     'copy:build',
     'copy:manifest',
-    'copy:readme',
+    'copy:info',
     'clean:build',
     'clean:tmp',
     function (err) {
