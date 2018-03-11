@@ -7,13 +7,15 @@ import { MasaDropdownComponent } from './components/dropdown/masa-dropdown.compo
 import { MasaAutoCompleteComponent } from './components/auto-complete/masa-auto-complete.component';
 import { MasaInputComponent } from './components/input/masa-input.component';
 import { MasaErrorComponent } from './components/error/masa-error.component';
+import { MasaToggleComponent } from './components/toggle/masa-toggle.component';
 
 @NgModule({
 	declarations: [
 		MasaDropdownComponent,
 		MasaAutoCompleteComponent,
 		MasaInputComponent,
-		MasaErrorComponent
+		MasaErrorComponent,
+		MasaToggleComponent
 	],
 	imports: [
 		CommonModule,
@@ -25,7 +27,8 @@ import { MasaErrorComponent } from './components/error/masa-error.component';
 		MasaDropdownComponent,
 		MasaAutoCompleteComponent,
 		MasaInputComponent,
-		MasaErrorComponent
+		MasaErrorComponent,
+		MasaToggleComponent
 	]
 })
 export class MasaUiElementsModule {

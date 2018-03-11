@@ -1,0 +1,10 @@
+<div [ngClass]="{ 'toggle-wrapper': true, 'disabled': disabled }">
+	<div [ngClass]="{ 'toggle-slider': true, 'active': value }">
+		<div class="toggle-bar"></div>
+		<div class="toggle-knob"></div>
+	</div>
+
+	<div class="toggle-content">
+		<ng-content></ng-content>
+	</div>
+</div>

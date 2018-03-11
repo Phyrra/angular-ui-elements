@@ -99,4 +99,11 @@
 			Required
 		</masa-error>
 	</masa-auto-complete>
+
+	<h3>Toggle</h3>
+
+	<masa-toggle name="value3" [(ngModel)]="value3" (ngModelChange)="onValueSelected($event)">
+		Some text
+		<br /> Some more text
+	</masa-toggle>
 </form>

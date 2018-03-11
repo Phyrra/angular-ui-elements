@@ -1,0 +1,85 @@
+@import "~scss/definitions";
+
+$width: 128px;
+$bar-height: 16px;
+$knob-size: 32px;
+
+:host {
+	.toggle-wrapper {
+		display: flex;
+
+		align-items: center;
+
+		&.disabled {
+			.toggle-slider {
+				.toggle-knob {
+					background-color: $inactive-color;
+				}
+			}
+		}
+
+		.toggle-slider {
+			position: relative;
+
+			cursor: pointer;
+
+			.toggle-bar {
+				width: $width;
+				height: $bar-height;
+
+				border-radius: $bar-height / 2;
+			}
+
+			.toggle-knob {
+				position: absolute;
+
+				top: -50%;
+
+				width: $knob-size;
+				height: $knob-size;
+				border-radius: $knob-size / 2;
+			}
+
+			&:not(.active) {
+				.toggle-knob {
+					border: 1px solid $border-color;
+					background-color: $inactive-color;
+
+					left: 0;
+
+					transition: all $transition-time linear;
+					transition-property: left;
+				}
+
+				.toggle-bar {
+					background-color: rgba($border-color, $opacity);
+
+					transition: all $transition-time linear;
+					transition-property: background-color;
+				}
+			}
+
+			&.active {
+				.toggle-knob {
+					background-color: $active-color;
+
+					left: calc(100% - #{$knob-size});
+
+					transition: all $transition-time linear;
+					transition-property: left;
+				}
+
+				.toggle-bar {
+					background-color: rgba($active-color, $opacity);
+
+					transition: all $transition-time linear;
+					transition-property: background-color;
+				}
+			}
+		}
+
+		.toggle-content {
+			margin-left: $default-margin;
+		}
+	}
+}
