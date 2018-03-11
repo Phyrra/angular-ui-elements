@@ -50,6 +50,8 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 	private onTouch: Function;
 	private onModelChange: Function;
 
+	touched: boolean;
+
 	search: string;
 
 	isOpen: boolean = false;
@@ -247,5 +249,7 @@ export class MasaAutoCompleteComponent implements ControlValueAccessor, OnInit {
 		}
 
 		this.items = null;
+
+		this.touched = true;
 	}
 }

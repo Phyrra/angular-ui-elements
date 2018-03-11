@@ -83,6 +83,7 @@
 		[itemRenderer]="userToString"
 		[minSearchLength]="2"
 		[maxItems]="3"
+		[required]="true"
 	>
 		<ng-template #option let-user="item">
 			{{ user.name }} ({{ user.abbreviation }})
@@ -93,5 +94,9 @@
 				There are {{ number }} items, only the first 3 are shown
 			</div>
 		</ng-template>
+
+		<masa-error *ngIf="form.form.get('item6')?.hasError('required')">
+			Required
+		</masa-error>
 	</masa-auto-complete>
 </form>
